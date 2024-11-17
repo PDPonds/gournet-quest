@@ -6,7 +6,11 @@ using UnityEngine.UI;
 
 public class MainMenuCanvas : MonoBehaviour
 {
+    [Header("===== Start Button =====")]
     [SerializeField] Button startGame_But;
+    [Header("===== Loading Scene =====")]
+    [SerializeField] GameObject loading_Panel;
+    [SerializeField] Image loading_Progressing_Img;
 
     private void Awake()
     {
@@ -15,7 +19,10 @@ public class MainMenuCanvas : MonoBehaviour
 
     void StartGame_Click()
     {
-        SceneManager.LoadScene(1);
+        loading_Panel.SetActive(true);
+        StartCoroutine(GameManager.Instance.LoadLevelAsync(1, loading_Progressing_Img));
     }
+
+
 
 }

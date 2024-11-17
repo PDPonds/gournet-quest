@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36b72208ca6cb7e4c8067a143e5d9ba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player: {fileID: 6778052323733655770, guid: 535991e4369b5eb4eb1844f7299e926a, type: 3}
   mainMenu_Camera: {fileID: 5107901924469843879, guid: 0c27d198a6e6da24196627c0582adaaa,
     type: 3}
   mainMenu_Directional_Light: {fileID: 4111589378710838468, guid: e982e85e3eb37a04784eec056af5df6a,
@@ -53,4 +54,6 @@ MonoBehaviour:
   mainMenu_Canvas: {fileID: 2917758670736548286, guid: ebb3c5237ecfc7f46bd3e7d0c41fb9ee,
     type: 3}
   mainMenu_EventSystem: {fileID: 2547903381669677250, guid: 3d450d6c08f42c847810c256172848e4,
+    type: 3}
+  mainMenu_Manager: {fileID: 6647037077971457309, guid: bb0acb2dc663aeb4ea396b4b1ed7f17a,
     type: 3}
