@@ -26,10 +26,16 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public Vector2 moveInput;
     [HideInInspector] public bool isRun = false;
 
+    [Header("===== Enegy =====")]
+    [SerializeField] int maxEnergy;
+    int curEnergy;
+
     public void SetupPlayer()
     {
         rb = GetComponent<Rigidbody>();
         collider = GetComponent<Collider>();
+
+        ResetEnergy();
 
         inputSystem = GetComponent<PlayerInputSystem>();
         inputSystem.SetupInputSystem(this);
@@ -127,6 +133,44 @@ public class PlayerManager : MonoBehaviour
     {
         return true;
     }
+    #endregion
+
+    #region Energy
+
+    void ResetEnergy()
+    {
+        curEnergy = maxEnergy;
+    }
+
+    void AddEnergy(int amout)
+    {
+        curEnergy += amout;
+        if (curEnergy > maxEnergy)
+        {
+            curEnergy = maxEnergy;
+        }
+    }
+
+    bool RemoveEnergy(int amount)
+    {
+        if (HasEnergy(amount))
+        {
+            curEnergy -= amount;
+            if (curEnergy <= 0)
+            {
+                curEnergy = 0;
+            }
+            return true;
+        }
+
+        return false;
+    }
+
+    bool HasEnergy(int amount)
+    {
+        return curEnergy >= amount;
+    }
+
     #endregion
 
 }
