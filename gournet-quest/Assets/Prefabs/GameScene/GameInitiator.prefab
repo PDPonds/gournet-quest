@@ -44,3 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8106b74a72e7ca8408271fb44f630d09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameScene_Camera: {fileID: 9077446201044195868, guid: 0fbcc5b6aed657a4e92d9e67c5539ce4,
+    type: 3}
+  gameScene_PostProcessing: {fileID: 9129469100168329141, guid: 18277fb41d4058142883c2fdebc6ebdb,
+    type: 3}
+  gameScene_DirectionalLight: {fileID: 5535913307635661164, guid: 50601840e9b503b479f88a6cd5bcc2fb,
+    type: 3}

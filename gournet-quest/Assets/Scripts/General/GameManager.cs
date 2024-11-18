@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager>
 {
+    [HideInInspector] public PlayerManager playerManager;
+
     [Header("===== General =====")]
     [SerializeField] GameObject Player;
 
@@ -16,7 +18,6 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] GameObject mainMenu_Post_Processing;
     [SerializeField] GameObject mainMenu_Canvas;
     [SerializeField] GameObject mainMenu_EventSystem;
-    [SerializeField] GameObject mainMenu_Manager;
 
     private void Awake()
     {
@@ -32,7 +33,6 @@ public class GameManager : Singleton<GameManager>
         GameObject postProcessingObj = Instantiate(mainMenu_Post_Processing);
         GameObject canvasObj = Instantiate(mainMenu_Canvas);
         GameObject eventSystemObj = Instantiate(mainMenu_EventSystem);
-        GameObject mainMenuManager = Instantiate(mainMenu_Manager);
     }
 
     public IEnumerator LoadLevelAsync(int sceneIndex, Image progressionBar)
@@ -51,6 +51,7 @@ public class GameManager : Singleton<GameManager>
         GameObject playerObj = Instantiate(Player, spawnPosition, Quaternion.identity);
         PlayerManager playerManager = playerObj.GetComponent<PlayerManager>();
         playerManager.SetupPlayer();
+        this.playerManager = playerManager;
     }
 
 }

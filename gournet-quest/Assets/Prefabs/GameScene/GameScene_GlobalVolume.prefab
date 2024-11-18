@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7549200820169878192}
   - component: {fileID: 7282835373641865895}
   m_Layer: 0
-  m_Name: GameSceneGlobalVolume
+  m_Name: GameScene_GlobalVolume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
