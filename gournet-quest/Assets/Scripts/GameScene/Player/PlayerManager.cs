@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : Singleton<PlayerManager>
 {
-    PlayerInputSystem inputSystem;
-    PlayerUIManager uiManager;
+    [HideInInspector] public PlayerInputSystem inputSystem;
+    [HideInInspector] public PlayerUIManager uiManager;
     Rigidbody rb;
     Collider collider;
 
@@ -30,6 +30,9 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] int maxEnergy;
     int curEnergy;
 
+    [Header("===== Inventory =====")]
+    public InventorySO player_Inventory;
+
     public void SetupPlayer()
     {
         rb = GetComponent<Rigidbody>();
@@ -37,11 +40,8 @@ public class PlayerManager : MonoBehaviour
 
         ResetEnergy();
 
-        inputSystem = GetComponent<PlayerInputSystem>();
-        inputSystem.SetupInputSystem(this);
-
         uiManager = GetComponent<PlayerUIManager>();
-        uiManager.SetupUIManager(this);
+        inputSystem = GetComponent<PlayerInputSystem>();
 
     }
 
@@ -83,8 +83,9 @@ public class PlayerManager : MonoBehaviour
     #region Controller
     void HandleMoveSpeed()
     {
-        if (isRun) curMoveSpeed = runSpeed;
-        else curMoveSpeed = walkSpeed;
+        float overWeight = player_Inventory.GetWeightOver();
+        if (isRun) curMoveSpeed = runSpeed - overWeight;
+        else curMoveSpeed = walkSpeed - overWeight;
     }
 
     void MoveHandle()

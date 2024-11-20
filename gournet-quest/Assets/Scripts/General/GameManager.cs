@@ -32,7 +32,7 @@ public class GameManager : Singleton<GameManager>
         GameObject directionalLightObj = Instantiate(mainMenu_Directional_Light);
         GameObject postProcessingObj = Instantiate(mainMenu_Post_Processing);
         GameObject canvasObj = Instantiate(mainMenu_Canvas);
-        GameObject eventSystemObj = Instantiate(mainMenu_EventSystem);
+        GameObject eventSystem = Instantiate(mainMenu_EventSystem);
     }
 
     public IEnumerator LoadLevelAsync(int sceneIndex, Image progressionBar)

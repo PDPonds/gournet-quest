@@ -53,6 +53,15 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleInventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""0a1f512c-414d-47f3-a6ad-3ad0f65efb25"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -132,6 +141,17 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""action"": ""Run"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""504d7c6a-352c-4697-813e-be887856a85a"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleInventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -143,6 +163,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         m_PlayerInput_Moving = m_PlayerInput.FindAction("Moving", throwIfNotFound: true);
         m_PlayerInput_MousePosition = m_PlayerInput.FindAction("MousePosition", throwIfNotFound: true);
         m_PlayerInput_Run = m_PlayerInput.FindAction("Run", throwIfNotFound: true);
+        m_PlayerInput_ToggleInventory = m_PlayerInput.FindAction("ToggleInventory", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -207,6 +228,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerInput_Moving;
     private readonly InputAction m_PlayerInput_MousePosition;
     private readonly InputAction m_PlayerInput_Run;
+    private readonly InputAction m_PlayerInput_ToggleInventory;
     public struct PlayerInputActions
     {
         private @InputSystem m_Wrapper;
@@ -214,6 +236,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         public InputAction @Moving => m_Wrapper.m_PlayerInput_Moving;
         public InputAction @MousePosition => m_Wrapper.m_PlayerInput_MousePosition;
         public InputAction @Run => m_Wrapper.m_PlayerInput_Run;
+        public InputAction @ToggleInventory => m_Wrapper.m_PlayerInput_ToggleInventory;
         public InputActionMap Get() { return m_Wrapper.m_PlayerInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -232,6 +255,9 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             @Run.started += instance.OnRun;
             @Run.performed += instance.OnRun;
             @Run.canceled += instance.OnRun;
+            @ToggleInventory.started += instance.OnToggleInventory;
+            @ToggleInventory.performed += instance.OnToggleInventory;
+            @ToggleInventory.canceled += instance.OnToggleInventory;
         }
 
         private void UnregisterCallbacks(IPlayerInputActions instance)
@@ -245,6 +271,9 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             @Run.started -= instance.OnRun;
             @Run.performed -= instance.OnRun;
             @Run.canceled -= instance.OnRun;
+            @ToggleInventory.started -= instance.OnToggleInventory;
+            @ToggleInventory.performed -= instance.OnToggleInventory;
+            @ToggleInventory.canceled -= instance.OnToggleInventory;
         }
 
         public void RemoveCallbacks(IPlayerInputActions instance)
@@ -267,5 +296,6 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         void OnMoving(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
+        void OnToggleInventory(InputAction.CallbackContext context);
     }
 }
