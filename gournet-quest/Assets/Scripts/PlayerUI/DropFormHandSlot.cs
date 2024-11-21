@@ -7,7 +7,10 @@ public class DropFormHandSlot : MonoBehaviour, IDropHandler
 {
     public void OnDrop(PointerEventData eventData)
     {
+        if (eventData.pointerDrag == null) return;
+
         InventorySlotPrefab slotPrefab = eventData.pointerDrag.GetComponent<InventorySlotPrefab>();
         slotPrefab.MoveToInventoryParent();
+
     }
 }

@@ -20,12 +20,19 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI item_ItemWeight;
     [Header("- Hand Slot")]
     [SerializeField] List<Transform> allHandSlot = new List<Transform>();
+    HandSlot curHandSlotSelected;
+
+    private void Start()
+    {
+        SelectHandSlot(0);
+    }
 
     public void ToggleInventoryPanel()
     {
         if (InventoryPanel.activeSelf)
         {
             HideItemDiscription();
+            if (curHandSlotSelected == null) SelectHandSlot(0);
             InventoryPanel.SetActive(false);
         }
         else
@@ -95,4 +102,15 @@ public class PlayerUIManager : MonoBehaviour
         }
 
     }
+
+    public void SelectHandSlot(int index)
+    {
+        if (curHandSlotSelected != null) curHandSlotSelected.HideSelectedBorder();
+
+        if (index < 0 || index >= allHandSlot.Count) return;
+        HandSlot handSlot = allHandSlot[index].GetComponent<HandSlot>();
+        handSlot.ShowSelectedBorder();
+        curHandSlotSelected = handSlot;
+    }
+
 }
