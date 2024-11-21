@@ -11,9 +11,13 @@ public class HandSlot : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
-        if (transform.childCount == 0)
+        if (eventData.pointerDrag == null) return;
+
+        InventorySlotPrefab slotPrefab = eventData.pointerDrag.GetComponent<InventorySlotPrefab>();
+        InventorySlot slot = PlayerManager.Instance.player_Inventory.GetSlot(slotPrefab.slotIndex);
+        ItemSO item = slot.Item;
+        if (transform.childCount == 0 && item is EquipmentItem)
         {
-            InventorySlotPrefab slotPrefab = eventData.pointerDrag.GetComponent<InventorySlotPrefab>();
             slotPrefab.SetHandSlot(transform);
         }
     }

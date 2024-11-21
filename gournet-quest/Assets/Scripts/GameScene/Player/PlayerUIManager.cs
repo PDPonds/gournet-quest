@@ -12,12 +12,18 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField] GameObject InventoryPanel;
     public Transform slotParent;
     [SerializeField] GameObject inventorySlotPrefab;
+
     [Header("- Item Detail")]
     [SerializeField] Image item_Icon;
     [SerializeField] TextMeshProUGUI item_Name;
     [SerializeField] TextMeshProUGUI item_Discription;
     [SerializeField] TextMeshProUGUI item_ItemCount;
     [SerializeField] TextMeshProUGUI item_ItemWeight;
+    [SerializeField] GameObject item_DurabilityBorder;
+    [SerializeField] Image item_DurabilityFill;
+    [SerializeField] Button item_Use_But;
+    [SerializeField] Button item_Drop_But;
+
     [Header("- Hand Slot")]
     [SerializeField] List<Transform> allHandSlot = new List<Transform>();
     [HideInInspector] public HandSlot curHandSlotSelected;
@@ -53,9 +59,25 @@ public class PlayerUIManager : MonoBehaviour
         item_Discription.text = item.item_Discription;
         item_ItemCount.text = count.ToString();
         item_ItemWeight.text = $"{weight} g.";
+        if (item is EquipmentItem eq)
+        {
+            item_DurabilityBorder.gameObject.SetActive(true);
+            float c = slot.curDurability;
+            float m = slot.maxDurability;
+            float p = c / m;
+            item_DurabilityFill.fillAmount = p;
+            item_Use_But.gameObject.SetActive(false);
+        }
+        else
+        {
+            item_DurabilityBorder.gameObject.SetActive(false);
+            item_Use_But.gameObject.SetActive(true);
+            item_Use_But.onClick.AddListener(() => UseItem(slot));
+        }
+        item_Drop_But.onClick.AddListener(DropItem);
     }
 
-    void HideItemDiscription()
+    public void HideItemDiscription()
     {
         item_Icon.sprite = null;
         item_Name.text = string.Empty;
@@ -111,6 +133,22 @@ public class PlayerUIManager : MonoBehaviour
         HandSlot handSlot = allHandSlot[index].GetComponent<HandSlot>();
         handSlot.ShowSelectedBorder();
         curHandSlotSelected = handSlot;
+    }
+
+    void UseItem(InventorySlot slot)
+    {
+        //InventorySO inventory = PlayerManager.Instance.player_Inventory;
+        //InventorySlot slot = inventory.GetSlot(slotIndex);
+        //PlayerManager.Instance.player_Inventory.RemoveItem(slot.Item, 1);
+        //UpdateItemAmount();
+        //HideItemDiscription();
+        //ShowItemDiscription(slot);
+        //PlayerManager.Instance.uiManager.UpdateInventorySlot();
+    }
+
+    void DropItem()
+    {
+
     }
 
 }

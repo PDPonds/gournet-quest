@@ -44,10 +44,13 @@ public class InventorySO : ScriptableObject
             if (count > inSlotCount)
             {
                 slots[slotIndex].count -= count;
+                return true;
             }
             else if (count == inSlotCount)
             {
                 slots.RemoveAt(slotIndex);
+                return true;
+
             }
         }
 

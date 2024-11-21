@@ -11,6 +11,7 @@ public class DropFormHandSlot : MonoBehaviour, IDropHandler
 
         InventorySlotPrefab slotPrefab = eventData.pointerDrag.GetComponent<InventorySlotPrefab>();
         slotPrefab.MoveToInventoryParent();
+        PlayerManager.Instance.uiManager.HideItemDiscription();
 
     }
 }

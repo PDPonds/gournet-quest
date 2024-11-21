@@ -33,6 +33,10 @@ public class PlayerManager : Singleton<PlayerManager>
     [Header("===== Inventory =====")]
     public InventorySO player_Inventory;
 
+    [Header("===== Hand Slot =====")]
+    public Transform bulletSpawnPoint;
+    public float curDelayTime;
+
     public void SetupPlayer()
     {
         rb = GetComponent<Rigidbody>();
@@ -50,6 +54,7 @@ public class PlayerManager : Singleton<PlayerManager>
         HandleMoveSpeed();
         MoveHandle();
         RotationHandle();
+        DecreaseDelayTime();
     }
 
     #region Mouse
@@ -174,9 +179,10 @@ public class PlayerManager : Singleton<PlayerManager>
 
     #endregion
 
-    #region Use Item
-    public void UseItem()
+    #region Use Item In Hand
+    public void UseItemInHandSlot()
     {
+        if (curDelayTime > 0) return;
         if (uiManager.curHandSlotSelected == null) return;
         if (uiManager.curHandSlotSelected.transform.childCount < 1) return;
 
@@ -184,29 +190,33 @@ public class PlayerManager : Singleton<PlayerManager>
         InventorySlotPrefab slotPrefab = itemPrefab.GetComponent<InventorySlotPrefab>();
         InventorySlot slot = player_Inventory.GetSlot(slotPrefab.slotIndex);
         ItemSO item = slot.Item;
-        switch (item.item_Type)
+        if (item is EquipmentItem equipmentItem)
         {
-            case ItemType.Equipment:
-                EquipmentItem equipmentItem = (EquipmentItem)item;
-                Debug.Log("Use Equipment");
-                if (player_Inventory.slots[slotPrefab.slotIndex].DecreaseDurabilityAndIsDestroy(equipmentItem.durabilityPerUse))
-                {
-                    player_Inventory.ClearSlot(slotPrefab.slotIndex);
-                    uiManager.UpdateInventorySlot();
-                }
-                else
-                {
-                    slotPrefab.UpdateDurability();
-                    uiManager.UpdateInventorySlot();
-                }
-                break;
-            case ItemType.Ingredient:
-            case ItemType.EnergyItem:
-                Debug.Log("Use Ingredient or Food");
-                player_Inventory.RemoveItem(item, 1);
-                slotPrefab.UpdateItemAmount();
+            equipmentItem.UseItem();
+            LookAt(GetDirToMouse());
+            if (player_Inventory.slots[slotPrefab.slotIndex].DecreaseDurabilityAndIsDestroy(equipmentItem.durabilityPerUse))
+            {
+                player_Inventory.ClearSlot(slotPrefab.slotIndex);
                 uiManager.UpdateInventorySlot();
-                break;
+            }
+            else
+            {
+                slotPrefab.UpdateDurability();
+                uiManager.UpdateInventorySlot();
+            }
+            curDelayTime = equipmentItem.delayTime;
+        }
+    }
+
+    void DecreaseDelayTime()
+    {
+        if (curDelayTime > 0)
+        {
+            curDelayTime -= Time.deltaTime;
+            if (curDelayTime <= 0)
+            {
+                curDelayTime = 0;
+            }
         }
     }
     #endregion

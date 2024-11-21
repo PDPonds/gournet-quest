@@ -100,51 +100,6 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""SelectHandSlot_5"",
-                    ""type"": ""Button"",
-                    ""id"": ""e3d098b1-34d2-4997-a105-fe9992f9e77c"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""SelectHandSlot_6"",
-                    ""type"": ""Button"",
-                    ""id"": ""bd5c12b8-77ca-4fb8-b720-6c924ac071d0"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""SelectHandSlot_7"",
-                    ""type"": ""Button"",
-                    ""id"": ""2fed97d4-e1d0-407b-a0cb-1482c36f0689"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""SelectHandSlot_8"",
-                    ""type"": ""Button"",
-                    ""id"": ""37d248d2-1120-45eb-9f51-b03c119e5365"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""SelectHandSlot_9"",
-                    ""type"": ""Button"",
-                    ""id"": ""0df2379f-2082-4d78-8209-69050a086ea2"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""UseItem"",
                     ""type"": ""Button"",
                     ""id"": ""22e86dfe-6064-463f-b1ad-69f6566e8ead"",
@@ -289,61 +244,6 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""3ab8f6ff-63ec-4274-9c71-3481e76f3727"",
-                    ""path"": ""<Keyboard>/5"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SelectHandSlot_5"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""bc7e36e1-83a5-4193-8ad5-19f38ed138e6"",
-                    ""path"": ""<Keyboard>/6"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SelectHandSlot_6"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""45e38bba-dc64-41b4-8241-35b61c389e2c"",
-                    ""path"": ""<Keyboard>/7"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SelectHandSlot_7"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""da9c7496-d78e-441d-88d1-d699a06625f7"",
-                    ""path"": ""<Keyboard>/8"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SelectHandSlot_8"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""c9769df6-23e1-4223-aa90-cdc2883f8e27"",
-                    ""path"": ""<Keyboard>/9"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SelectHandSlot_9"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""9b6e8edd-e6e3-4dbe-83db-6c2a8fb92be3"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
@@ -368,11 +268,6 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         m_PlayerInput_SelectHandSlot_2 = m_PlayerInput.FindAction("SelectHandSlot_2", throwIfNotFound: true);
         m_PlayerInput_SelectHandSlot_3 = m_PlayerInput.FindAction("SelectHandSlot_3", throwIfNotFound: true);
         m_PlayerInput_SelectHandSlot_4 = m_PlayerInput.FindAction("SelectHandSlot_4", throwIfNotFound: true);
-        m_PlayerInput_SelectHandSlot_5 = m_PlayerInput.FindAction("SelectHandSlot_5", throwIfNotFound: true);
-        m_PlayerInput_SelectHandSlot_6 = m_PlayerInput.FindAction("SelectHandSlot_6", throwIfNotFound: true);
-        m_PlayerInput_SelectHandSlot_7 = m_PlayerInput.FindAction("SelectHandSlot_7", throwIfNotFound: true);
-        m_PlayerInput_SelectHandSlot_8 = m_PlayerInput.FindAction("SelectHandSlot_8", throwIfNotFound: true);
-        m_PlayerInput_SelectHandSlot_9 = m_PlayerInput.FindAction("SelectHandSlot_9", throwIfNotFound: true);
         m_PlayerInput_UseItem = m_PlayerInput.FindAction("UseItem", throwIfNotFound: true);
     }
 
@@ -443,11 +338,6 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerInput_SelectHandSlot_2;
     private readonly InputAction m_PlayerInput_SelectHandSlot_3;
     private readonly InputAction m_PlayerInput_SelectHandSlot_4;
-    private readonly InputAction m_PlayerInput_SelectHandSlot_5;
-    private readonly InputAction m_PlayerInput_SelectHandSlot_6;
-    private readonly InputAction m_PlayerInput_SelectHandSlot_7;
-    private readonly InputAction m_PlayerInput_SelectHandSlot_8;
-    private readonly InputAction m_PlayerInput_SelectHandSlot_9;
     private readonly InputAction m_PlayerInput_UseItem;
     public struct PlayerInputActions
     {
@@ -461,11 +351,6 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         public InputAction @SelectHandSlot_2 => m_Wrapper.m_PlayerInput_SelectHandSlot_2;
         public InputAction @SelectHandSlot_3 => m_Wrapper.m_PlayerInput_SelectHandSlot_3;
         public InputAction @SelectHandSlot_4 => m_Wrapper.m_PlayerInput_SelectHandSlot_4;
-        public InputAction @SelectHandSlot_5 => m_Wrapper.m_PlayerInput_SelectHandSlot_5;
-        public InputAction @SelectHandSlot_6 => m_Wrapper.m_PlayerInput_SelectHandSlot_6;
-        public InputAction @SelectHandSlot_7 => m_Wrapper.m_PlayerInput_SelectHandSlot_7;
-        public InputAction @SelectHandSlot_8 => m_Wrapper.m_PlayerInput_SelectHandSlot_8;
-        public InputAction @SelectHandSlot_9 => m_Wrapper.m_PlayerInput_SelectHandSlot_9;
         public InputAction @UseItem => m_Wrapper.m_PlayerInput_UseItem;
         public InputActionMap Get() { return m_Wrapper.m_PlayerInput; }
         public void Enable() { Get().Enable(); }
@@ -500,21 +385,6 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             @SelectHandSlot_4.started += instance.OnSelectHandSlot_4;
             @SelectHandSlot_4.performed += instance.OnSelectHandSlot_4;
             @SelectHandSlot_4.canceled += instance.OnSelectHandSlot_4;
-            @SelectHandSlot_5.started += instance.OnSelectHandSlot_5;
-            @SelectHandSlot_5.performed += instance.OnSelectHandSlot_5;
-            @SelectHandSlot_5.canceled += instance.OnSelectHandSlot_5;
-            @SelectHandSlot_6.started += instance.OnSelectHandSlot_6;
-            @SelectHandSlot_6.performed += instance.OnSelectHandSlot_6;
-            @SelectHandSlot_6.canceled += instance.OnSelectHandSlot_6;
-            @SelectHandSlot_7.started += instance.OnSelectHandSlot_7;
-            @SelectHandSlot_7.performed += instance.OnSelectHandSlot_7;
-            @SelectHandSlot_7.canceled += instance.OnSelectHandSlot_7;
-            @SelectHandSlot_8.started += instance.OnSelectHandSlot_8;
-            @SelectHandSlot_8.performed += instance.OnSelectHandSlot_8;
-            @SelectHandSlot_8.canceled += instance.OnSelectHandSlot_8;
-            @SelectHandSlot_9.started += instance.OnSelectHandSlot_9;
-            @SelectHandSlot_9.performed += instance.OnSelectHandSlot_9;
-            @SelectHandSlot_9.canceled += instance.OnSelectHandSlot_9;
             @UseItem.started += instance.OnUseItem;
             @UseItem.performed += instance.OnUseItem;
             @UseItem.canceled += instance.OnUseItem;
@@ -546,21 +416,6 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             @SelectHandSlot_4.started -= instance.OnSelectHandSlot_4;
             @SelectHandSlot_4.performed -= instance.OnSelectHandSlot_4;
             @SelectHandSlot_4.canceled -= instance.OnSelectHandSlot_4;
-            @SelectHandSlot_5.started -= instance.OnSelectHandSlot_5;
-            @SelectHandSlot_5.performed -= instance.OnSelectHandSlot_5;
-            @SelectHandSlot_5.canceled -= instance.OnSelectHandSlot_5;
-            @SelectHandSlot_6.started -= instance.OnSelectHandSlot_6;
-            @SelectHandSlot_6.performed -= instance.OnSelectHandSlot_6;
-            @SelectHandSlot_6.canceled -= instance.OnSelectHandSlot_6;
-            @SelectHandSlot_7.started -= instance.OnSelectHandSlot_7;
-            @SelectHandSlot_7.performed -= instance.OnSelectHandSlot_7;
-            @SelectHandSlot_7.canceled -= instance.OnSelectHandSlot_7;
-            @SelectHandSlot_8.started -= instance.OnSelectHandSlot_8;
-            @SelectHandSlot_8.performed -= instance.OnSelectHandSlot_8;
-            @SelectHandSlot_8.canceled -= instance.OnSelectHandSlot_8;
-            @SelectHandSlot_9.started -= instance.OnSelectHandSlot_9;
-            @SelectHandSlot_9.performed -= instance.OnSelectHandSlot_9;
-            @SelectHandSlot_9.canceled -= instance.OnSelectHandSlot_9;
             @UseItem.started -= instance.OnUseItem;
             @UseItem.performed -= instance.OnUseItem;
             @UseItem.canceled -= instance.OnUseItem;
@@ -591,11 +446,6 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         void OnSelectHandSlot_2(InputAction.CallbackContext context);
         void OnSelectHandSlot_3(InputAction.CallbackContext context);
         void OnSelectHandSlot_4(InputAction.CallbackContext context);
-        void OnSelectHandSlot_5(InputAction.CallbackContext context);
-        void OnSelectHandSlot_6(InputAction.CallbackContext context);
-        void OnSelectHandSlot_7(InputAction.CallbackContext context);
-        void OnSelectHandSlot_8(InputAction.CallbackContext context);
-        void OnSelectHandSlot_9(InputAction.CallbackContext context);
         void OnUseItem(InputAction.CallbackContext context);
     }
 }
