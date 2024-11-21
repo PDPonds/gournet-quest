@@ -30,6 +30,8 @@ public class PlayerInputSystem : MonoBehaviour
             inputSystem.PlayerInput.SelectHandSlot_8.performed += i => playerUIManager.SelectHandSlot(7);
             inputSystem.PlayerInput.SelectHandSlot_9.performed += i => playerUIManager.SelectHandSlot(8);
 
+            inputSystem.PlayerInput.UseItem.canceled += i => PlayerManager.Instance.UseItem();
+
         }
 
         inputSystem.Enable();

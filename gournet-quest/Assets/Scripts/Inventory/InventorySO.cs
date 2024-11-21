@@ -7,20 +7,33 @@ using UnityEngine;
 public class InventorySO : ScriptableObject
 {
     public List<InventorySlot> slots = new List<InventorySlot>();
-
     public float inventory_maxWeight;
 
     public void AddItem(ItemSO item, int count)
     {
-        if (HasItem(item, out int slotIndex))
+        switch (item.item_Type)
         {
-            slots[slotIndex].count += count;
+            case ItemType.Equipment:
+                EquipmentItem equipment = (EquipmentItem)item;
+                InventorySlot equipmentSlot = new InventorySlot(item, count, equipment.maxDurability);
+                slots.Add(equipmentSlot);
+                break;
+            case ItemType.Ingredient:
+            case ItemType.EnergyItem:
+
+                if (HasItem(item, out int slotIndex))
+                {
+                    slots[slotIndex].count += count;
+                }
+                else
+                {
+                    InventorySlot slot = new InventorySlot(item, count);
+                    slots.Add(slot);
+                }
+
+                break;
         }
-        else
-        {
-            InventorySlot slot = new InventorySlot(item, count);
-            slots.Add(slot);
-        }
+
     }
 
     public bool RemoveItem(ItemSO item, int count)
@@ -108,6 +121,11 @@ public class InventorySO : ScriptableObject
         return null;
     }
 
+    public void ClearSlot(int slotIndex)
+    {
+        slots.RemoveAt(slotIndex);
+    }
+
 }
 
 [Serializable]
@@ -115,6 +133,8 @@ public class InventorySlot
 {
     public ItemSO Item;
     public int count;
+    public float maxDurability;
+    public float curDurability;
 
     public Transform curHandSlot;
 
@@ -124,11 +144,38 @@ public class InventorySlot
         this.count = count;
     }
 
+    public InventorySlot(ItemSO item, int count, float durability)
+    {
+        Item = item;
+        this.count = count;
+        this.maxDurability = durability;
+        this.curDurability = durability;
+    }
+
     public float GetSlotWeight()
     {
         float slotWeight = 0f;
         slotWeight = Item.item_Weight * count;
         return slotWeight;
+    }
+
+    public bool DecreaseDurabilityAndIsDestroy(float durability)
+    {
+        curDurability -= durability;
+        if (curDurability <= 0f)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public void IncreaseDurability(float durability)
+    {
+        curDurability += durability;
+        if (curDurability >= maxDurability)
+        {
+            curDurability = maxDurability;
+        }
     }
 
 }

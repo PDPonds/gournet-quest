@@ -9,10 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d73aba4fd3ae684082baabd295f6bda, type: 3}
+  m_Script: {fileID: 11500000, guid: d1252407b14a24f4cbf835264d2e56d3, type: 3}
   m_Name: 001_SimpleWard
   m_EditorClassIdentifier: 
-  item_Name: SimpleWard
   item_ID: 1
+  item_Name: Simple Ward
+  item_Discription: Use to create Fire ball
   item_Icon: {fileID: -1643746614, guid: 7c19b30c2f51b2845865536912612fd4, type: 3}
-  item_Weight: 0.25
+  item_Weight: 0.2
+  item_Type: 0
+  maxDurability: 10
+  durabilityPerUse: 0.2

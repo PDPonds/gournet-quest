@@ -174,4 +174,41 @@ public class PlayerManager : Singleton<PlayerManager>
 
     #endregion
 
+    #region Use Item
+    public void UseItem()
+    {
+        if (uiManager.curHandSlotSelected == null) return;
+        if (uiManager.curHandSlotSelected.transform.childCount < 1) return;
+
+        Transform itemPrefab = uiManager.curHandSlotSelected.transform.GetChild(0);
+        InventorySlotPrefab slotPrefab = itemPrefab.GetComponent<InventorySlotPrefab>();
+        InventorySlot slot = player_Inventory.GetSlot(slotPrefab.slotIndex);
+        ItemSO item = slot.Item;
+        switch (item.item_Type)
+        {
+            case ItemType.Equipment:
+                EquipmentItem equipmentItem = (EquipmentItem)item;
+                Debug.Log("Use Equipment");
+                if (player_Inventory.slots[slotPrefab.slotIndex].DecreaseDurabilityAndIsDestroy(equipmentItem.durabilityPerUse))
+                {
+                    player_Inventory.ClearSlot(slotPrefab.slotIndex);
+                    uiManager.UpdateInventorySlot();
+                }
+                else
+                {
+                    slotPrefab.UpdateDurability();
+                    uiManager.UpdateInventorySlot();
+                }
+                break;
+            case ItemType.Ingredient:
+            case ItemType.EnergyItem:
+                Debug.Log("Use Ingredient or Food");
+                player_Inventory.RemoveItem(item, 1);
+                slotPrefab.UpdateItemAmount();
+                uiManager.UpdateInventorySlot();
+                break;
+        }
+    }
+    #endregion
+
 }

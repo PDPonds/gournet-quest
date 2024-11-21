@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Player_Inventory
   m_EditorClassIdentifier: 
   slots:
-  - Item: {fileID: 11400000, guid: edcefa1af150a1b4a9f059ebcab32acd, type: 2}
+  - Item: {fileID: 11400000, guid: ca654654b7cf59e41b79767c259473d6, type: 2}
     count: 1
+    maxDurability: 10
+    curDurability: 1
     curHandSlot: {fileID: 0}
   inventory_maxWeight: 20

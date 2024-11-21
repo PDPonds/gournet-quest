@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class InventorySlotPrefab : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
-    int slotIndex;
+    [HideInInspector] public int slotIndex;
+
+    [SerializeField] GameObject durabilityBorder;
+    [SerializeField] Image durabilityFill;
+    [SerializeField] TextMeshProUGUI itemAmountText;
 
     Transform lastParent;
     Image img;
@@ -14,6 +19,10 @@ public class InventorySlotPrefab : MonoBehaviour, IPointerClickHandler, IBeginDr
     public void SetupSlot(int index)
     {
         slotIndex = index;
+        InventorySlot slot = PlayerManager.Instance.player_Inventory.GetSlot(slotIndex);
+        if (slot.Item is EquipmentItem) ShowDurability();
+        else HideDurability();
+        UpdateItemAmount();
     }
 
     private void Awake()
@@ -59,4 +68,32 @@ public class InventorySlotPrefab : MonoBehaviour, IPointerClickHandler, IBeginDr
             PlayerManager.Instance.uiManager.ShowItemDiscription(PlayerManager.Instance.player_Inventory.GetSlot(slotIndex));
         }
     }
+
+    void ShowDurability()
+    {
+        durabilityBorder.gameObject.SetActive(true);
+        UpdateDurability();
+    }
+
+    void HideDurability()
+    {
+        durabilityBorder.gameObject.SetActive(false);
+    }
+
+    public void UpdateDurability()
+    {
+        float c = PlayerManager.Instance.player_Inventory.GetSlot(slotIndex).curDurability;
+        float m = PlayerManager.Instance.player_Inventory.GetSlot(slotIndex).maxDurability;
+        float p = c / m;
+        durabilityFill.fillAmount = p;
+    }
+
+    public void UpdateItemAmount()
+    {
+        float count = PlayerManager.Instance.player_Inventory.GetSlot(slotIndex).count;
+        itemAmountText.text = count.ToString();
+        if (count > 1) itemAmountText.gameObject.SetActive(true);
+        else itemAmountText.gameObject.SetActive(false);
+    }
+
 }

@@ -20,7 +20,7 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI item_ItemWeight;
     [Header("- Hand Slot")]
     [SerializeField] List<Transform> allHandSlot = new List<Transform>();
-    HandSlot curHandSlotSelected;
+    [HideInInspector] public HandSlot curHandSlotSelected;
 
     private void Start()
     {
@@ -64,7 +64,7 @@ public class PlayerUIManager : MonoBehaviour
         item_ItemWeight.text = string.Empty;
     }
 
-    void UpdateInventorySlot()
+    public void UpdateInventorySlot()
     {
         ClearInventorySlotParent();
         if (PlayerManager.Instance.player_Inventory.slots.Count > 0)
