@@ -20,17 +20,14 @@ public class InventorySlotPrefab : MonoBehaviour, IPointerClickHandler, IBeginDr
     public void SetupSlot(int index)
     {
         slotIndex = index;
+        img = GetComponent<Image>();
+        img.sprite = PlayerManager.Instance.player_Inventory.GetSlot(slotIndex).Item.item_Icon;
         InventorySlot slot = PlayerManager.Instance.player_Inventory.GetSlot(slotIndex);
         if (slot.Item is EquipmentItem) ShowDurability();
         else HideDurability();
         UpdateItemAmount();
     }
 
-    private void Awake()
-    {
-        img = GetComponent<Image>();
-        img.sprite = PlayerManager.Instance.player_Inventory.GetSlot(slotIndex).Item.item_Icon;
-    }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -66,7 +63,7 @@ public class InventorySlotPrefab : MonoBehaviour, IPointerClickHandler, IBeginDr
     {
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            PlayerManager.Instance.uiManager.ShowItemDiscription(PlayerManager.Instance.player_Inventory.GetSlot(slotIndex));
+            PlayerManager.Instance.uiManager.ShowItemDiscription(slotIndex);
         }
     }
 

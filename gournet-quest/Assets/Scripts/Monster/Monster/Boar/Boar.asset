@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d8f13d312d8c0446ae1c01eab4694b6, type: 3}
+  m_Name: Boar
+  m_EditorClassIdentifier: 
+  monster_Name: Boar
+  monster_Icon: {fileID: 0}
+  monster_Prefab: {fileID: 4816320422519114480, guid: 99c31095fc3022a47b217b013ded3071,
+    type: 3}
+  monster_HP: 10
+  monster_moveSpeed: 3
+  monster_Damage: 1
+  monster_changeTime: 1
+  monster_AttackDelay: 1
+  monster_AttackRange: 1
+  monster_ItemDrop:
+  - item: {fileID: 11400000, guid: e2210b1259724824988a4024636669c7, type: 2}
+    dropRate: 100
+    minDropCount: 2
+    maxDropCount: 4
+    minDurability: 0
+    maxDurability: 0

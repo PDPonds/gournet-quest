@@ -20,9 +20,9 @@ MonoBehaviour:
   item_Type: 0
   maxDurability: 10
   durabilityPerUse: 0.2
+  delayTime: 1
   equipment_Type: 0
   bulletPrefab: {fileID: 7080966564931340145, guid: d6f3b9baf15b0ce4e9630fb51353669e,
     type: 3}
   bulletSpeed: 3
   bulletTime: 3
-  changeTime: 1

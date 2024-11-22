@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class GameInitiator : MonoBehaviour
 {
+    
     [SerializeField] GameObject gameScene_Camera;
     [SerializeField] GameObject gameScene_PostProcessing;
     [SerializeField] GameObject gameScene_DirectionalLight;

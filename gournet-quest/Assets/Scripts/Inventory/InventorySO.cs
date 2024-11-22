@@ -36,7 +36,7 @@ public class InventorySO : ScriptableObject
 
     }
 
-    public bool RemoveItem(ItemSO item, int count)
+    public bool RemoveItemAndIsDestroy(ItemSO item, int count)
     {
         if (HasItem(item, out int slotIndex))
         {
@@ -44,7 +44,6 @@ public class InventorySO : ScriptableObject
             if (count > inSlotCount)
             {
                 slots[slotIndex].count -= count;
-                return true;
             }
             else if (count == inSlotCount)
             {

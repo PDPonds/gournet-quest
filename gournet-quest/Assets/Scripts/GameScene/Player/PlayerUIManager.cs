@@ -48,8 +48,9 @@ public class PlayerUIManager : MonoBehaviour
         }
     }
 
-    public void ShowItemDiscription(InventorySlot slot)
+    public void ShowItemDiscription(int slotIndex)
     {
+        InventorySlot slot = PlayerManager.Instance.player_Inventory.GetSlot(slotIndex);
         ItemSO item = slot.Item;
         float weight = slot.GetSlotWeight();
         int count = slot.count;
@@ -68,11 +69,17 @@ public class PlayerUIManager : MonoBehaviour
             item_DurabilityFill.fillAmount = p;
             item_Use_But.gameObject.SetActive(false);
         }
-        else
+        else if (item is EnergyItem energyItem)
         {
             item_DurabilityBorder.gameObject.SetActive(false);
             item_Use_But.gameObject.SetActive(true);
-            item_Use_But.onClick.AddListener(() => UseItem(slot));
+        }
+        else if (item is IngredientItem ingredientItem)
+        {
+            item_DurabilityBorder.gameObject.SetActive(false);
+            item_Use_But.gameObject.SetActive(true);
+            item_Use_But.onClick.RemoveAllListeners();
+            item_Use_But.onClick.AddListener(() => UseItem(slotIndex));
         }
         item_Drop_But.onClick.AddListener(DropItem);
     }
@@ -94,10 +101,9 @@ public class PlayerUIManager : MonoBehaviour
             for (int i = 0; i < PlayerManager.Instance.player_Inventory.slots.Count; i++)
             {
                 InventorySlot slot = PlayerManager.Instance.player_Inventory.slots[i];
-                Transform parent = null;
-                if (slot.curHandSlot != null) parent = slot.curHandSlot.transform;
-                else parent = slotParent;
-                GameObject slotObj = Instantiate(inventorySlotPrefab, parent);
+                GameObject slotObj = Instantiate(inventorySlotPrefab);
+                if (slot.curHandSlot != null) slotObj.transform.SetParent(slot.curHandSlot.transform);
+                else slotObj.transform.SetParent(slotParent);
                 InventorySlotPrefab slotPrefab = slotObj.GetComponent<InventorySlotPrefab>();
                 slotPrefab.SetupSlot(i);
             }
@@ -135,15 +141,16 @@ public class PlayerUIManager : MonoBehaviour
         curHandSlotSelected = handSlot;
     }
 
-    void UseItem(InventorySlot slot)
+    void UseItem(int slotIndex)
     {
-        //InventorySO inventory = PlayerManager.Instance.player_Inventory;
-        //InventorySlot slot = inventory.GetSlot(slotIndex);
-        //PlayerManager.Instance.player_Inventory.RemoveItem(slot.Item, 1);
-        //UpdateItemAmount();
-        //HideItemDiscription();
-        //ShowItemDiscription(slot);
-        //PlayerManager.Instance.uiManager.UpdateInventorySlot();
+        InventorySlot slot = PlayerManager.Instance.player_Inventory.GetSlot(slotIndex);
+        if (slot.Item is EnergyItem enegyItem)
+        {
+            bool isDestroy = PlayerManager.Instance.player_Inventory.RemoveItemAndIsDestroy(slot.Item, 1);
+            UpdateInventorySlot();
+            HideItemDiscription();
+            if (!isDestroy) ShowItemDiscription(slotIndex);
+        }
     }
 
     void DropItem()

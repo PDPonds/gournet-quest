@@ -16,7 +16,8 @@ public class HandSlot : MonoBehaviour, IDropHandler
         InventorySlotPrefab slotPrefab = eventData.pointerDrag.GetComponent<InventorySlotPrefab>();
         InventorySlot slot = PlayerManager.Instance.player_Inventory.GetSlot(slotPrefab.slotIndex);
         ItemSO item = slot.Item;
-        if (transform.childCount == 0 && item is EquipmentItem)
+
+        if (transform.childCount == 0 && item is EquipmentItem && item is EquipmentItem)
         {
             slotPrefab.SetHandSlot(transform);
         }

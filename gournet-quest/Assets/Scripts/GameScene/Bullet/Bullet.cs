@@ -19,4 +19,13 @@ public class Bullet : MonoBehaviour
         transform.Translate(dir * speed * Time.deltaTime);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent<Monster>(out Monster monster))
+        {
+            monster.TakeDamage(1);
+            monster.SwitchBehavior(MonsterBehavior.Chase);
+        }
+    }
+
 }
