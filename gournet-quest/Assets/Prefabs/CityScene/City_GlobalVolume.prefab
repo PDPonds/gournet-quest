@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4703832150214092372
+--- !u!1 &9129469100168329141
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5325255368101393557}
-  - component: {fileID: 190094315072716739}
+  - component: {fileID: 7549200820169878192}
+  - component: {fileID: 7282835373641865895}
   m_Layer: 0
-  m_Name: GameInitiator
+  m_Name: City_GlobalVolume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5325255368101393557
+--- !u!4 &7549200820169878192
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4703832150214092372}
+  m_GameObject: {fileID: 9129469100168329141}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,21 +32,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &190094315072716739
+--- !u!114 &7282835373641865895
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4703832150214092372}
+  m_GameObject: {fileID: 9129469100168329141}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8106b74a72e7ca8408271fb44f630d09, type: 3}
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameScene_Camera: {fileID: 9077446201044195868, guid: 0fbcc5b6aed657a4e92d9e67c5539ce4,
-    type: 3}
-  gameScene_PostProcessing: {fileID: 9129469100168329141, guid: 18277fb41d4058142883c2fdebc6ebdb,
-    type: 3}
-  gameScene_DirectionalLight: {fileID: 5535913307635661164, guid: 50601840e9b503b479f88a6cd5bcc2fb,
-    type: 3}
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 8231641846c50f74799521f3ec329ba5, type: 2}

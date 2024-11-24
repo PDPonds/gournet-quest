@@ -107,6 +107,15 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""406e2b8e-fdc3-477f-88ff-228512ebc7ef"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -252,6 +261,17 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""action"": ""UseItem"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""18d1a1f9-8142-4619-80ae-e0436dfcd922"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -269,6 +289,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         m_PlayerInput_SelectHandSlot_3 = m_PlayerInput.FindAction("SelectHandSlot_3", throwIfNotFound: true);
         m_PlayerInput_SelectHandSlot_4 = m_PlayerInput.FindAction("SelectHandSlot_4", throwIfNotFound: true);
         m_PlayerInput_UseItem = m_PlayerInput.FindAction("UseItem", throwIfNotFound: true);
+        m_PlayerInput_Interact = m_PlayerInput.FindAction("Interact", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -339,6 +360,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerInput_SelectHandSlot_3;
     private readonly InputAction m_PlayerInput_SelectHandSlot_4;
     private readonly InputAction m_PlayerInput_UseItem;
+    private readonly InputAction m_PlayerInput_Interact;
     public struct PlayerInputActions
     {
         private @InputSystem m_Wrapper;
@@ -352,6 +374,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         public InputAction @SelectHandSlot_3 => m_Wrapper.m_PlayerInput_SelectHandSlot_3;
         public InputAction @SelectHandSlot_4 => m_Wrapper.m_PlayerInput_SelectHandSlot_4;
         public InputAction @UseItem => m_Wrapper.m_PlayerInput_UseItem;
+        public InputAction @Interact => m_Wrapper.m_PlayerInput_Interact;
         public InputActionMap Get() { return m_Wrapper.m_PlayerInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -388,6 +411,9 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             @UseItem.started += instance.OnUseItem;
             @UseItem.performed += instance.OnUseItem;
             @UseItem.canceled += instance.OnUseItem;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
         }
 
         private void UnregisterCallbacks(IPlayerInputActions instance)
@@ -419,6 +445,9 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             @UseItem.started -= instance.OnUseItem;
             @UseItem.performed -= instance.OnUseItem;
             @UseItem.canceled -= instance.OnUseItem;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
         }
 
         public void RemoveCallbacks(IPlayerInputActions instance)
@@ -447,5 +476,6 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         void OnSelectHandSlot_3(InputAction.CallbackContext context);
         void OnSelectHandSlot_4(InputAction.CallbackContext context);
         void OnUseItem(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
 }

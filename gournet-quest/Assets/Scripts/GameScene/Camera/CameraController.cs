@@ -7,6 +7,9 @@ public class CameraController : MonoBehaviour
     Transform target;
     [Header("===== Follow =====")]
     [SerializeField] float smoothSpeed = 0.125f;
+    [Header("===== LayerMask =====")]
+    [SerializeField] LayerMask inSideMask;
+    [SerializeField] LayerMask outSideMask;
 
     private void LateUpdate()
     {
@@ -27,6 +30,16 @@ public class CameraController : MonoBehaviour
     {
         this.target = target;
         Camera.SetupCurrent(transform.GetChild(0).GetComponent<Camera>());
+    }
+
+    public void SetupInSide()
+    {
+        Camera.main.cullingMask = inSideMask;
+    }
+
+    public void SetupOutSide()
+    {
+        Camera.main.cullingMask = outSideMask;
     }
 
 }

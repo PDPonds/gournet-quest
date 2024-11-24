@@ -107,10 +107,7 @@ public class InventorySO : ScriptableObject
 
     public void SetHandSlot(int slotIndex, Transform handSlot)
     {
-        if (slotIndex < slots.Count)
-        {
-            slots[slotIndex].curHandSlot = handSlot;
-        }
+        slots[slotIndex].curHandSlot = handSlot;
     }
 
     public InventorySlot GetSlot(int slotIndex)

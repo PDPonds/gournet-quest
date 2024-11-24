@@ -2,12 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PlayerBehavior
+{
+    Normal, UIShowing
+}
+
 public class PlayerManager : Singleton<PlayerManager>
 {
     [HideInInspector] public PlayerInputSystem inputSystem;
     [HideInInspector] public PlayerUIManager uiManager;
+    [HideInInspector] public CameraController cameraController;
     Rigidbody rb;
     Collider collider;
+
+    PlayerBehavior curBehavior;
 
     [SerializeField] GameObject playerMesh;
 
@@ -35,13 +43,19 @@ public class PlayerManager : Singleton<PlayerManager>
 
     [Header("===== Hand Slot =====")]
     public Transform bulletSpawnPoint;
-    public float curDelayTime;
+    [HideInInspector] public float curDelayTime;
+
+    [Header("===== Interactive =====")]
+    [SerializeField] LayerMask interactiveMask;
+    [SerializeField] float interactiveLength;
+    [HideInInspector] public IInteractable curInteractObj;
 
     public void SetupPlayer()
     {
         rb = GetComponent<Rigidbody>();
         collider = GetComponent<Collider>();
 
+        SwitchBehavior(PlayerBehavior.Normal);
         ResetEnergy();
 
         uiManager = GetComponent<PlayerUIManager>();
@@ -51,10 +65,12 @@ public class PlayerManager : Singleton<PlayerManager>
 
     private void Update()
     {
+        UpdateBehavior();
         HandleMoveSpeed();
         MoveHandle();
         RotationHandle();
         DecreaseDelayTime();
+        InteractiveCheck();
     }
 
     #region Mouse
@@ -131,13 +147,14 @@ public class PlayerManager : Singleton<PlayerManager>
 
     void LookAt(Vector3 targetDir)
     {
+        if (targetDir == Vector3.zero) return;
         Quaternion targetRot = Quaternion.LookRotation(targetDir);
         transform.rotation = targetRot;
     }
 
     bool CanMove()
     {
-        return true;
+        return !isBehavior(PlayerBehavior.UIShowing);
     }
     #endregion
 
@@ -182,6 +199,7 @@ public class PlayerManager : Singleton<PlayerManager>
     #region Use Item In Hand
     public void UseItemInHandSlot()
     {
+        if (isBehavior(PlayerBehavior.UIShowing)) return;
         if (curDelayTime > 0) return;
         if (uiManager.curHandSlotSelected == null) return;
         if (uiManager.curHandSlotSelected.transform.childCount < 1) return;
@@ -220,5 +238,72 @@ public class PlayerManager : Singleton<PlayerManager>
         }
     }
     #endregion
+
+    #region Behavior
+    public void SwitchBehavior(PlayerBehavior behavior)
+    {
+        curBehavior = behavior;
+        switch (curBehavior)
+        {
+            case PlayerBehavior.Normal:
+                break;
+            case PlayerBehavior.UIShowing:
+                break;
+        }
+    }
+
+    void UpdateBehavior()
+    {
+        switch (curBehavior)
+        {
+            case PlayerBehavior.Normal:
+                break;
+            case PlayerBehavior.UIShowing:
+                break;
+        }
+    }
+
+    public bool isBehavior(PlayerBehavior behavior)
+    {
+        return curBehavior == behavior;
+    }
+
+    #endregion
+
+    void InteractiveCheck()
+    {
+        Collider[] interactiveObjs = Physics.OverlapSphere(transform.position + transform.forward * 0.5f, interactiveLength, interactiveMask);
+        if (interactiveObjs.Length > 0)
+        {
+            if (interactiveObjs[0].TryGetComponent<IInteractable>(out IInteractable interactable))
+            {
+                curInteractObj = interactable;
+                uiManager.ShowInteractiveUI(curInteractObj.InteractInfo());
+            }
+            else
+            {
+                curInteractObj = null;
+                uiManager.HideInteractiveUI();
+            }
+        }
+        else
+        {
+            curInteractObj = null;
+            uiManager.HideInteractiveUI();
+        }
+    }
+
+    public void Interact()
+    {
+        if (isBehavior(PlayerBehavior.UIShowing)) return;
+        if (curInteractObj == null) return;
+        curInteractObj.Interact();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position + transform.forward * 0.5f, interactiveLength);
+    }
 
 }

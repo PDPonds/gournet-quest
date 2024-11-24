@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 1597412390136045811}
   - component: {fileID: 3849169596928322874}
   m_Layer: 0
-  m_Name: GameScene_CameraHolder
+  m_Name: City_CameraHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -183,3 +183,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   smoothSpeed: 0.125
+  inSideMask:
+    serializedVersion: 2
+    m_Bits: 7176
+  outSideMask:
+    serializedVersion: 2
+    m_Bits: 904

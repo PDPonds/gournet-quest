@@ -27,6 +27,8 @@ public class PlayerInputSystem : MonoBehaviour
 
             inputSystem.PlayerInput.UseItem.canceled += i => PlayerManager.Instance.UseItemInHandSlot();
 
+            inputSystem.PlayerInput.Interact.canceled += i => PlayerManager.Instance.Interact();
+
         }
 
         inputSystem.Enable();

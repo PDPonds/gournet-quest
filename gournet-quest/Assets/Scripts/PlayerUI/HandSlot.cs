@@ -21,6 +21,7 @@ public class HandSlot : MonoBehaviour, IDropHandler
         {
             slotPrefab.SetHandSlot(transform);
         }
+        else return;
     }
 
     public void ShowSelectedBorder()

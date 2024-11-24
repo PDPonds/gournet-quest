@@ -28,6 +28,9 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField] List<Transform> allHandSlot = new List<Transform>();
     [HideInInspector] public HandSlot curHandSlotSelected;
 
+    [Header("===== Interactive =====")]
+    [SerializeField] TextMeshProUGUI interactiveText;
+
     private void Start()
     {
         SelectHandSlot(0);
@@ -39,11 +42,13 @@ public class PlayerUIManager : MonoBehaviour
         {
             HideItemDiscription();
             if (curHandSlotSelected == null) SelectHandSlot(0);
+            PlayerManager.Instance.SwitchBehavior(PlayerBehavior.Normal);
             InventoryPanel.SetActive(false);
         }
         else
         {
             UpdateInventorySlot();
+            PlayerManager.Instance.SwitchBehavior(PlayerBehavior.UIShowing);
             InventoryPanel.SetActive(true);
         }
     }
@@ -60,6 +65,10 @@ public class PlayerUIManager : MonoBehaviour
         item_Discription.text = item.item_Discription;
         item_ItemCount.text = count.ToString();
         item_ItemWeight.text = $"{weight} g.";
+
+        item_Use_But.gameObject.SetActive(true);
+        item_Drop_But.gameObject.SetActive(true);
+
         if (item is EquipmentItem eq)
         {
             item_DurabilityBorder.gameObject.SetActive(true);
@@ -72,12 +81,11 @@ public class PlayerUIManager : MonoBehaviour
         else if (item is EnergyItem energyItem)
         {
             item_DurabilityBorder.gameObject.SetActive(false);
-            item_Use_But.gameObject.SetActive(true);
         }
         else if (item is IngredientItem ingredientItem)
         {
+            item_Use_But.gameObject.SetActive(false);
             item_DurabilityBorder.gameObject.SetActive(false);
-            item_Use_But.gameObject.SetActive(true);
             item_Use_But.onClick.RemoveAllListeners();
             item_Use_But.onClick.AddListener(() => UseItem(slotIndex));
         }
@@ -91,6 +99,9 @@ public class PlayerUIManager : MonoBehaviour
         item_Discription.text = string.Empty;
         item_ItemCount.text = string.Empty;
         item_ItemWeight.text = string.Empty;
+        item_DurabilityBorder.SetActive(false);
+        item_Use_But.gameObject.SetActive(false);
+        item_Drop_But.gameObject.SetActive(false);
     }
 
     public void UpdateInventorySlot()
@@ -156,6 +167,17 @@ public class PlayerUIManager : MonoBehaviour
     void DropItem()
     {
 
+    }
+
+    public void ShowInteractiveUI(string text)
+    {
+        interactiveText.gameObject.SetActive(true);
+        interactiveText.text = text;
+    }
+
+    public void HideInteractiveUI()
+    {
+        interactiveText.gameObject.SetActive(false);
     }
 
 }
