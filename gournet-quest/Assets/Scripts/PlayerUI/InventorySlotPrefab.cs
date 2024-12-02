@@ -4,7 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class InventorySlotPrefab : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
@@ -14,18 +13,21 @@ public class InventorySlotPrefab : MonoBehaviour, IPointerClickHandler, IBeginDr
     [SerializeField] Image durabilityFill;
     [SerializeField] TextMeshProUGUI itemAmountText;
 
+    [HideInInspector] public InventorySO curInventory;
+
     Transform lastParent;
     Image img;
 
-    public void SetupSlot(int index)
+    public void SetupSlot(int index, InventorySO inventory)
     {
         slotIndex = index;
         img = GetComponent<Image>();
-        img.sprite = PlayerManager.Instance.player_Inventory.GetSlot(slotIndex).Item.item_Icon;
-        InventorySlot slot = PlayerManager.Instance.player_Inventory.GetSlot(slotIndex);
-        if (slot.Item is EquipmentItem) ShowDurability();
+        img.sprite = inventory.GetSlot(slotIndex).Item.item_Icon;
+        curInventory = inventory;
+        InventorySlot slot = inventory.GetSlot(slotIndex);
+        if (slot.Item is EquipmentItem) ShowDurability(inventory);
         else HideDurability();
-        UpdateItemAmount();
+        UpdateItemAmount(inventory);
     }
 
 
@@ -67,10 +69,10 @@ public class InventorySlotPrefab : MonoBehaviour, IPointerClickHandler, IBeginDr
         }
     }
 
-    void ShowDurability()
+    void ShowDurability(InventorySO inventory)
     {
         durabilityBorder.gameObject.SetActive(true);
-        UpdateDurability();
+        UpdateDurability(inventory);
     }
 
     void HideDurability()
@@ -78,17 +80,17 @@ public class InventorySlotPrefab : MonoBehaviour, IPointerClickHandler, IBeginDr
         durabilityBorder.gameObject.SetActive(false);
     }
 
-    public void UpdateDurability()
+    public void UpdateDurability(InventorySO inventory)
     {
-        float c = PlayerManager.Instance.player_Inventory.GetSlot(slotIndex).curDurability;
-        float m = PlayerManager.Instance.player_Inventory.GetSlot(slotIndex).maxDurability;
+        float c = inventory.GetSlot(slotIndex).curDurability;
+        float m = inventory.GetSlot(slotIndex).maxDurability;
         float p = c / m;
         durabilityFill.fillAmount = p;
     }
 
-    public void UpdateItemAmount()
+    public void UpdateItemAmount(InventorySO inventory)
     {
-        float count = PlayerManager.Instance.player_Inventory.GetSlot(slotIndex).count;
+        int count = inventory.GetSlot(slotIndex).count;
         itemAmountText.text = count.ToString();
         if (count > 1) itemAmountText.gameObject.SetActive(true);
         else itemAmountText.gameObject.SetActive(false);

@@ -50,6 +50,9 @@ public class PlayerManager : Singleton<PlayerManager>
     [SerializeField] float interactiveLength;
     [HideInInspector] public IInteractable curInteractObj;
 
+    [Header("===== Fridge =====")]
+    public InventorySO fridge_Inventory;
+
     public void SetupPlayer()
     {
         rb = GetComponent<Rigidbody>();
@@ -219,7 +222,7 @@ public class PlayerManager : Singleton<PlayerManager>
             }
             else
             {
-                slotPrefab.UpdateDurability();
+                slotPrefab.UpdateDurability(player_Inventory);
                 uiManager.UpdateInventorySlot();
             }
             curDelayTime = equipmentItem.delayTime;

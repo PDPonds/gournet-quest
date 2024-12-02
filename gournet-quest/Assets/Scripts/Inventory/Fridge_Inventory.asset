@@ -10,17 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80bf24cb791c42545a3f1f1a328ada5d, type: 3}
-  m_Name: Player_Inventory
+  m_Name: Fridge_Inventory
   m_EditorClassIdentifier: 
   slots:
-  - Item: {fileID: 11400000, guid: ea1de51687bde2942a88a33c9a68165f, type: 2}
-    count: 1
-    maxDurability: 10
-    curDurability: 9
-    curHandSlot: {fileID: 0}
   - Item: {fileID: 11400000, guid: e2210b1259724824988a4024636669c7, type: 2}
     count: 2
     maxDurability: 0
     curDurability: 0
     curHandSlot: {fileID: 0}
-  inventory_maxWeight: 10
+  inventory_maxWeight: 20

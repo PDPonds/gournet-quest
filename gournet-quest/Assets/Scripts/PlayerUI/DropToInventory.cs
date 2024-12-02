@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DropFormHandSlot : MonoBehaviour, IDropHandler
+public class DropToInventory : MonoBehaviour, IDropHandler
 {
     public void OnDrop(PointerEventData eventData)
     {
-        if (eventData.pointerDrag == null) return;
 
         InventorySlotPrefab slotPrefab = eventData.pointerDrag.GetComponent<InventorySlotPrefab>();
+        if (slotPrefab == null) return;
+
         slotPrefab.MoveToInventoryParent();
         PlayerManager.Instance.uiManager.HideItemDiscription();
 

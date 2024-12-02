@@ -31,6 +31,17 @@ public class PlayerUIManager : MonoBehaviour
     [Header("===== Interactive =====")]
     [SerializeField] TextMeshProUGUI interactiveText;
 
+    [Header("===== Cooking Station =====")]
+    [SerializeField] GameObject cookingStationBG;
+    [Header("- Frigde")]
+    [SerializeField] Button fridgeBut;
+    [SerializeField] GameObject fridgeBorder;
+    public Transform playerInventoryInFridgeParent;
+    public Transform fridgeInventoryParent;
+    [Header("- Food Station")]
+    [SerializeField] Button foodReseachBut;
+    [SerializeField] GameObject foodReseachBorder;
+
     private void Start()
     {
         SelectHandSlot(0);
@@ -38,12 +49,17 @@ public class PlayerUIManager : MonoBehaviour
 
     public void ToggleInventoryPanel()
     {
+        if (PlayerManager.Instance.isBehavior(PlayerBehavior.UIShowing)) return;
+
         if (InventoryPanel.activeSelf)
         {
             HideItemDiscription();
             if (curHandSlotSelected == null) SelectHandSlot(0);
             PlayerManager.Instance.SwitchBehavior(PlayerBehavior.Normal);
             InventoryPanel.SetActive(false);
+
+            if (cookingStationBG.activeSelf) HideCookingStation();
+
         }
         else
         {
@@ -116,7 +132,7 @@ public class PlayerUIManager : MonoBehaviour
                 if (slot.curHandSlot != null) slotObj.transform.SetParent(slot.curHandSlot.transform);
                 else slotObj.transform.SetParent(slotParent);
                 InventorySlotPrefab slotPrefab = slotObj.GetComponent<InventorySlotPrefab>();
-                slotPrefab.SetupSlot(i);
+                slotPrefab.SetupSlot(i, PlayerManager.Instance.player_Inventory);
             }
         }
     }
@@ -178,6 +194,95 @@ public class PlayerUIManager : MonoBehaviour
     public void HideInteractiveUI()
     {
         interactiveText.gameObject.SetActive(false);
+    }
+
+    public void ShowCookingStation()
+    {
+        PlayerManager.Instance.SwitchBehavior(PlayerBehavior.UIShowing);
+
+        fridgeBut.onClick.RemoveAllListeners();
+        foodReseachBut.onClick.RemoveAllListeners();
+        fridgeBut.onClick.AddListener(FridgeBut);
+        foodReseachBut.onClick.AddListener(FoodReseachBut);
+        FridgeBut();
+
+        cookingStationBG.SetActive(true);
+    }
+
+    public void HideCookingStation()
+    {
+        PlayerManager.Instance.SwitchBehavior(PlayerBehavior.Normal);
+        cookingStationBG.SetActive(false);
+    }
+
+    void FridgeBut()
+    {
+        UpdateFridge();
+
+        fridgeBut.interactable = false;
+        fridgeBorder.gameObject.SetActive(true);
+
+        foodReseachBut.interactable = true;
+        foodReseachBorder.SetActive(false);
+    }
+
+    void FoodReseachBut()
+    {
+        fridgeBut.interactable = true;
+        fridgeBorder.gameObject.SetActive(false);
+
+        foodReseachBut.interactable = false;
+        foodReseachBorder.SetActive(true);
+    }
+
+    public void UpdateFridge()
+    {
+        ClearFrideSlotParent();
+
+        if (PlayerManager.Instance.player_Inventory.slots.Count > 0)
+        {
+            for (int i = 0; i < PlayerManager.Instance.player_Inventory.slots.Count; i++)
+            {
+                InventorySlot slot = PlayerManager.Instance.player_Inventory.slots[i];
+                GameObject slotObj = Instantiate(inventorySlotPrefab);
+                slotObj.transform.SetParent(playerInventoryInFridgeParent);
+                InventorySlotPrefab slotPrefab = slotObj.GetComponent<InventorySlotPrefab>();
+                slotPrefab.SetupSlot(i, PlayerManager.Instance.player_Inventory);
+            }
+        }
+
+        if (PlayerManager.Instance.fridge_Inventory.slots.Count > 0)
+        {
+            for (int i = 0; i < PlayerManager.Instance.fridge_Inventory.slots.Count; i++)
+            {
+                InventorySlot slot = PlayerManager.Instance.fridge_Inventory.slots[i];
+                GameObject slotObj = Instantiate(inventorySlotPrefab);
+                slotObj.transform.SetParent(fridgeInventoryParent);
+                InventorySlotPrefab slotPrefab = slotObj.GetComponent<InventorySlotPrefab>();
+                slotPrefab.SetupSlot(i, PlayerManager.Instance.fridge_Inventory);
+            }
+        }
+
+    }
+
+    void ClearFrideSlotParent()
+    {
+        if (playerInventoryInFridgeParent.childCount > 0)
+        {
+            for (int i = 0; i < playerInventoryInFridgeParent.childCount; i++)
+            {
+                Destroy(playerInventoryInFridgeParent.GetChild(i).gameObject);
+            }
+        }
+
+        if (fridgeInventoryParent.childCount > 0)
+        {
+            for (int i = 0; i < fridgeInventoryParent.childCount; i++)
+            {
+                Destroy(fridgeInventoryParent.GetChild(i).gameObject);
+            }
+        }
+
     }
 
 }

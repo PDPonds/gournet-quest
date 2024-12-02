@@ -112,12 +112,7 @@ public class InventorySO : ScriptableObject
 
     public InventorySlot GetSlot(int slotIndex)
     {
-        if (slotIndex < slots.Count)
-        {
-            return slots[slotIndex];
-        }
-
-        return null;
+        return slots[slotIndex];
     }
 
     public void ClearSlot(int slotIndex)
