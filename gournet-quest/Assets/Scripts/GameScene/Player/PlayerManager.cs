@@ -53,6 +53,9 @@ public class PlayerManager : Singleton<PlayerManager>
     [Header("===== Fridge =====")]
     public InventorySO fridge_Inventory;
 
+    [Header("===== Menus =====")]
+    public CurPlayerMenu curPlayerMenu;
+
     public void SetupPlayer()
     {
         rb = GetComponent<Rigidbody>();
@@ -307,6 +310,66 @@ public class PlayerManager : Singleton<PlayerManager>
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position + transform.forward * 0.5f, interactiveLength);
+    }
+
+    public List<IngredientSlot> GetAllIngredientsInPlayer()
+    {
+        List<IngredientSlot> ingredientSlots = new List<IngredientSlot>();
+
+        if (player_Inventory.slots.Count > 0)
+        {
+            for (int i = 0; i < player_Inventory.slots.Count; i++)
+            {
+                ItemSO item = player_Inventory.slots[i].Item;
+                int count = player_Inventory.slots[i].count;
+                if (item is IngredientItem)
+                {
+                    IngredientSlot slot = new IngredientSlot();
+                    slot.ingredient = (IngredientItem)item;
+                    slot.count = count;
+                    ingredientSlots.Add(slot);
+                }
+            }
+        }
+
+        if (fridge_Inventory.slots.Count > 0)
+        {
+            for (int i = 0; i < fridge_Inventory.slots.Count; i++)
+            {
+                ItemSO item = fridge_Inventory.slots[i].Item;
+                int count = fridge_Inventory.slots[i].count;
+                if (item is IngredientItem)
+                {
+                    if (ingredientSlots.Count > 0)
+                    {
+                        for (int j = 0; j < ingredientSlots.Count; j++)
+                        {
+                            ItemSO slotItem = ingredientSlots[j].ingredient;
+                            if (item == slotItem)
+                            {
+                                ingredientSlots[j].count += count;
+                            }
+                            else
+                            {
+                                IngredientSlot slot = new IngredientSlot();
+                                slot.ingredient = (IngredientItem)item;
+                                slot.count = count;
+                                ingredientSlots.Add(slot);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        IngredientSlot slot = new IngredientSlot();
+                        slot.ingredient = (IngredientItem)item;
+                        slot.count = count;
+                        ingredientSlots.Add(slot);
+                    }
+                }
+            }
+        }
+
+        return ingredientSlots;
     }
 
 }

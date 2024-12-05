@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3758ab637c95cc4084786173d61c557, type: 3}
+  m_Name: PorkSteak
+  m_EditorClassIdentifier: 
+  menu_Name: PorkSteak
+  menu_Icon: {fileID: 21300000, guid: 3670322031f171f4781edd7e2bb76ecf, type: 3}
+  menu_Discription: 
+  ingredients:
+  - ingredient: {fileID: 11400000, guid: e2210b1259724824988a4024636669c7, type: 2}
+    count: 1
+  - ingredient: {fileID: 11400000, guid: 56453192c97b2154bada27eadd9e2464, type: 2}
+    count: 1
+  processes:
+  - {fileID: 11400000, guid: b096b32b5effbd740a82eb8f6cdbf247, type: 2}
+  - {fileID: 11400000, guid: aaafd48dbd3d6de47a58f7a28cabb54f, type: 2}

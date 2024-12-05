@@ -12,6 +12,10 @@ public class GameManager : Singleton<GameManager>
     [Header("===== General =====")]
     [SerializeField] GameObject Player;
 
+    [Header("===== All =====")]
+    public AllItem items;
+    public AllMenu menus;
+
     [Header("===== Main Menu =====")]
     [SerializeField] GameObject mainMenu_Camera;
     [SerializeField] GameObject mainMenu_Directional_Light;
