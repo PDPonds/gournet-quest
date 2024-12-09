@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -61,6 +62,9 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField] Button mainDishBtn;
     [SerializeField] Button dessertBtn;
     [SerializeField] Button beverageBtn;
+    [Header("Cooking Scene")]
+    [SerializeField] GameObject loadCookingScenePanel;
+    [SerializeField] Image loadCookingSceneFill;
 
     private void Start()
     {
@@ -354,7 +358,12 @@ public class PlayerUIManager : MonoBehaviour
         menuInfo_CompletenessCountFill.fillAmount = p;
         menuInfo_MenuMaxCost.text = menuSlot.Menu.menu_Cost.ToString();
 
-        if (menuSlot.completenessCount < 100) menuInfo_ReseachBut.interactable = true;
+        if (menuSlot.completenessCount < 100)
+        {
+            menuInfo_ReseachBut.interactable = true;
+            menuInfo_ReseachBut.onClick.RemoveAllListeners();
+            menuInfo_ReseachBut.onClick.AddListener(() => Reseach(menuSlot.Menu));
+        }
         else menuInfo_ReseachBut.interactable = false;
 
         InitIngredientsInfo(menuSlot.Menu);
@@ -374,6 +383,8 @@ public class PlayerUIManager : MonoBehaviour
         menuInfo_MenuDetail.SetActive(false);
 
         menuInfo_ReseachBut.interactable = true;
+        menuInfo_ReseachBut.onClick.RemoveAllListeners();
+        menuInfo_ReseachBut.onClick.AddListener(() => Reseach(menu));
 
         InitIngredientsInfo(menu);
 
@@ -396,6 +407,13 @@ public class PlayerUIManager : MonoBehaviour
         InitIngredientsInfo(menu);
 
         menuInfoBorder.SetActive(true);
+    }
+
+    void Reseach(Menu menu)
+    {
+        GameManager.Instance.curCookingMenu = menu;
+        loadCookingScenePanel.SetActive(true);
+        StartCoroutine(GameManager.Instance.LoadLevelAsync(2, loadCookingSceneFill));
     }
 
     void InitIngredientsInfo(Menu menu)
@@ -440,7 +458,6 @@ public class PlayerUIManager : MonoBehaviour
     {
         menuInfoBorder.SetActive(false);
     }
-
 
     void AllMenuBtn()
     {

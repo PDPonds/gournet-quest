@@ -274,6 +274,34 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""CookingInput"",
+            ""id"": ""fa9e3e0a-f6c5-4489-b887-a21ad28d5f5c"",
+            ""actions"": [
+                {
+                    ""name"": ""SpaceAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""be64a5d5-1289-4f33-9f47-ad61cbf7a158"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""02088927-9502-472c-b66a-27030732a92c"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpaceAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -290,6 +318,9 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         m_PlayerInput_SelectHandSlot_4 = m_PlayerInput.FindAction("SelectHandSlot_4", throwIfNotFound: true);
         m_PlayerInput_UseItem = m_PlayerInput.FindAction("UseItem", throwIfNotFound: true);
         m_PlayerInput_Interact = m_PlayerInput.FindAction("Interact", throwIfNotFound: true);
+        // CookingInput
+        m_CookingInput = asset.FindActionMap("CookingInput", throwIfNotFound: true);
+        m_CookingInput_SpaceAction = m_CookingInput.FindAction("SpaceAction", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -465,6 +496,52 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         }
     }
     public PlayerInputActions @PlayerInput => new PlayerInputActions(this);
+
+    // CookingInput
+    private readonly InputActionMap m_CookingInput;
+    private List<ICookingInputActions> m_CookingInputActionsCallbackInterfaces = new List<ICookingInputActions>();
+    private readonly InputAction m_CookingInput_SpaceAction;
+    public struct CookingInputActions
+    {
+        private @InputSystem m_Wrapper;
+        public CookingInputActions(@InputSystem wrapper) { m_Wrapper = wrapper; }
+        public InputAction @SpaceAction => m_Wrapper.m_CookingInput_SpaceAction;
+        public InputActionMap Get() { return m_Wrapper.m_CookingInput; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CookingInputActions set) { return set.Get(); }
+        public void AddCallbacks(ICookingInputActions instance)
+        {
+            if (instance == null || m_Wrapper.m_CookingInputActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_CookingInputActionsCallbackInterfaces.Add(instance);
+            @SpaceAction.started += instance.OnSpaceAction;
+            @SpaceAction.performed += instance.OnSpaceAction;
+            @SpaceAction.canceled += instance.OnSpaceAction;
+        }
+
+        private void UnregisterCallbacks(ICookingInputActions instance)
+        {
+            @SpaceAction.started -= instance.OnSpaceAction;
+            @SpaceAction.performed -= instance.OnSpaceAction;
+            @SpaceAction.canceled -= instance.OnSpaceAction;
+        }
+
+        public void RemoveCallbacks(ICookingInputActions instance)
+        {
+            if (m_Wrapper.m_CookingInputActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ICookingInputActions instance)
+        {
+            foreach (var item in m_Wrapper.m_CookingInputActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_CookingInputActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public CookingInputActions @CookingInput => new CookingInputActions(this);
     public interface IPlayerInputActions
     {
         void OnMoving(InputAction.CallbackContext context);
@@ -477,5 +554,9 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         void OnSelectHandSlot_4(InputAction.CallbackContext context);
         void OnUseItem(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+    }
+    public interface ICookingInputActions
+    {
+        void OnSpaceAction(InputAction.CallbackContext context);
     }
 }

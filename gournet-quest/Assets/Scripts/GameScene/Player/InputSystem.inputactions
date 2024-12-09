@@ -252,6 +252,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "CookingInput",
+            "id": "fa9e3e0a-f6c5-4489-b887-a21ad28d5f5c",
+            "actions": [
+                {
+                    "name": "SpaceAction",
+                    "type": "Button",
+                    "id": "be64a5d5-1289-4f33-9f47-ad61cbf7a158",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "02088927-9502-472c-b66a-27030732a92c",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpaceAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

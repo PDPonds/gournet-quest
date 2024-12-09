@@ -12,8 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 260724093fe2ef440bb636f7480e49a2, type: 3}
   m_Name: Process_PorkSteak_1
   m_EditorClassIdentifier: 
-  process_Name: 
   process_Description: Season the prepared pork with salt and pepper.
   processType: 0
-  mixedTypes: 0000000001000000
+  process_Time_Sec: 20
+  sprinkle_target_speed: 2
+  sprinkle_delay_per_target: 1
+  sprinkle_min_max_increse_progression: {x: 1, y: 3}
+  sprinkle_decrease_progression: 2
+  sprinkle_target_progression: 10
+  success_Rate: 7
+  sprinkleTypes: 0000000001000000
+  sprinkle_obstacle: 02000000
   ingredients: []

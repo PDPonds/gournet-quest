@@ -23,4 +23,9 @@ MonoBehaviour:
     maxDurability: 0
     curDurability: 0
     curHandSlot: {fileID: 0}
+  - Item: {fileID: 11400000, guid: 56453192c97b2154bada27eadd9e2464, type: 2}
+    count: 2
+    maxDurability: 0
+    curDurability: 0
+    curHandSlot: {fileID: 0}
   inventory_maxWeight: 10

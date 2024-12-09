@@ -23,6 +23,9 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] GameObject mainMenu_Canvas;
     [SerializeField] GameObject mainMenu_EventSystem;
 
+    [Header("===== Cooking Scene =====")]
+    [HideInInspector] public Menu curCookingMenu;
+
     private void Awake()
     {
         BindMainMenuObject();

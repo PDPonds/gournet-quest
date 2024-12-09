@@ -13,7 +13,6 @@ public class PlayerManager : Singleton<PlayerManager>
     [HideInInspector] public PlayerUIManager uiManager;
     [HideInInspector] public CameraController cameraController;
     Rigidbody rb;
-    Collider collider;
 
     PlayerBehavior curBehavior;
 
@@ -59,7 +58,6 @@ public class PlayerManager : Singleton<PlayerManager>
     public void SetupPlayer()
     {
         rb = GetComponent<Rigidbody>();
-        collider = GetComponent<Collider>();
 
         SwitchBehavior(PlayerBehavior.Normal);
         ResetEnergy();

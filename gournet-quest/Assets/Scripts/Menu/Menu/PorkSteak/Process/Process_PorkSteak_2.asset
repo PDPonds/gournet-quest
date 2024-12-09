@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6909c5ed4ab8214d9222450c19aa814, type: 3}
   m_Name: Process_PorkSteak_2
   m_EditorClassIdentifier: 
-  process_Name: 
   process_Description: Grill the pork and rosemary.
   processType: 1
+  process_Time_Sec: 20
   ingredients: []
+  grill_length: 0.2
+  grill_increase_position_per_click: 0.1
+  grill_decrease_per_time: 0.5
+  grill_increase_progression_per_time: 0.1

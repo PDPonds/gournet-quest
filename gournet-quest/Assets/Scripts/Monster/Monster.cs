@@ -11,7 +11,6 @@ public enum MonsterBehavior
 public class Monster : MonoBehaviour, IDamageable
 {
     [SerializeField] MonsterType monsterType;
-    Collider collider;
     Rigidbody rb;
     NavMeshAgent agent;
 
@@ -29,7 +28,6 @@ public class Monster : MonoBehaviour, IDamageable
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        collider = GetComponent<Collider>();
         agent = GetComponent<NavMeshAgent>();
         SetupMonster();
     }
