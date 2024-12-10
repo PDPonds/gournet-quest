@@ -60,6 +60,19 @@ public class CurPlayerMenu : ScriptableObject
         }
     }
 
+    public List<Menu> GetAllMenus()
+    {
+        List<Menu> list = new List<Menu>();
+        if (slots.Count > 0)
+        {
+            for (int i = 0; i < slots.Count; i++)
+            {
+                list.Add(slots[i].Menu);
+            }
+        }
+        return list;
+    }
+
 }
 
 [Serializable]

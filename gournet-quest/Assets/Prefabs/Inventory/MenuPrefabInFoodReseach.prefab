@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7323705176140770757}
   - component: {fileID: 879673195179102966}
   m_Layer: 3
-  m_Name: MenuPrefab
+  m_Name: MenuPrefabInFoodReseach
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

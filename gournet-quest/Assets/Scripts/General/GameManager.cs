@@ -30,6 +30,8 @@ public class GameManager : Singleton<GameManager>
     [HideInInspector] public Menu curCookingMenu;
     [HideInInspector] public float curCompletness;
 
+    [Header("===== Restaurant =====")]
+    [HideInInspector] public bool isRestaurantOpen;
 
     private void Awake()
     {

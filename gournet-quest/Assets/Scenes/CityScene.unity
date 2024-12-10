@@ -243,6 +243,7 @@ MonoBehaviour:
   room_Name: Player Restaurant
   room_EnterPosition: {fileID: 251678331}
   doorType: 1
+  isRestaurantDoor: 1
 --- !u!1 &76099647
 GameObject:
   m_ObjectHideFlags: 0
@@ -1131,6 +1132,7 @@ MonoBehaviour:
   room_Name: Player Restaurant
   room_EnterPosition: {fileID: 1973049136}
   doorType: 0
+  isRestaurantDoor: 1
 --- !u!65 &937485760
 BoxCollider:
   m_ObjectHideFlags: 0

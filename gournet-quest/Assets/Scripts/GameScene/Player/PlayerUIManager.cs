@@ -56,18 +56,35 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField] Transform menuInfo_IngredientParent;
     [SerializeField] GameObject menuInfo_IngredientPrefab;
     [SerializeField] Button menuInfo_ReseachBut;
-    [Header("Menu Btn")]
+    [Header("Menu In Reseact Btn")]
     [SerializeField] Button allMenuBtn;
     [SerializeField] Button appetizerBtn;
     [SerializeField] Button mainDishBtn;
     [SerializeField] Button dessertBtn;
     [SerializeField] Button beverageBtn;
+    [Header("- Restaurant Menu Btn")]
+    [SerializeField] Button restaurantBut;
+    [SerializeField] GameObject restaurantMenuBorder;
+    [Header("Menu In Reseact Slot")]
+    [SerializeField] Transform mir_MenuParent;
+    [Header("Menu In Restaurant Btn")]
+    [SerializeField] Button mir_allMenuBtn;
+    [SerializeField] Button mir_appetizerBtn;
+    [SerializeField] Button mir_mainDishBtn;
+    [SerializeField] Button mir_dessertBtn;
+    [SerializeField] Button mir_beverageBtn;
+
     [Header("Cooking Scene")]
     [SerializeField] GameObject loadCookingScenePanel;
     [SerializeField] Image loadCookingSceneFill;
 
+    [Header("===== Restuarant =====")]
+    public Button open_and_close_restaurant_but;
+    [SerializeField] TextMeshProUGUI open_and_close_text;
+
     private void Start()
     {
+        open_and_close_restaurant_but.onClick.AddListener(ToggleRestaurantState);
         SelectHandSlot(0);
     }
 
@@ -149,7 +166,7 @@ public class PlayerUIManager : MonoBehaviour
 
     public void UpdateInventorySlot()
     {
-        ClearInventorySlotParent();
+        ClearParent(slotParent);
         if (PlayerManager.Instance.player_Inventory.slots.Count > 0)
         {
             for (int i = 0; i < PlayerManager.Instance.player_Inventory.slots.Count; i++)
@@ -164,26 +181,6 @@ public class PlayerUIManager : MonoBehaviour
         }
     }
 
-    void ClearInventorySlotParent()
-    {
-        if (slotParent.childCount > 0)
-        {
-            for (int i = 0; i < slotParent.childCount; i++)
-            {
-                Destroy(slotParent.GetChild(i).gameObject);
-            }
-        }
-
-        for (int i = 0; i < allHandSlot.Count; i++)
-        {
-            Transform handSlot = allHandSlot[i].transform;
-            if (handSlot.childCount > 0)
-            {
-                Destroy(handSlot.GetChild(0).gameObject);
-            }
-        }
-
-    }
 
     public void SelectHandSlot(int index)
     {
@@ -231,22 +228,40 @@ public class PlayerUIManager : MonoBehaviour
         foodReseachBut.onClick.RemoveAllListeners();
         fridgeBut.onClick.AddListener(FridgeBut);
         foodReseachBut.onClick.AddListener(FoodReseachBut);
+        restaurantBut.onClick.RemoveAllListeners();
+        restaurantBut.onClick.AddListener(RestaurantMenuBut);
         FridgeBut();
 
         allMenuBtn.onClick.RemoveAllListeners();
-        allMenuBtn.onClick.AddListener(AllMenuBtn);
+        allMenuBtn.onClick.AddListener(() => AllMenuBtn(menuParent, GameManager.Instance.menus.menus));
 
         appetizerBtn.onClick.RemoveAllListeners();
-        appetizerBtn.onClick.AddListener(AppetizerBtn);
+        appetizerBtn.onClick.AddListener(() => AppetizerBtn(GameManager.Instance.menus.menus));
 
         mainDishBtn.onClick.RemoveAllListeners();
-        mainDishBtn.onClick.AddListener(MainDishBtn);
+        mainDishBtn.onClick.AddListener(() => MainDishBtn(GameManager.Instance.menus.menus));
 
         dessertBtn.onClick.RemoveAllListeners();
-        dessertBtn.onClick.AddListener(DessertBtn);
+        dessertBtn.onClick.AddListener(() => DessertBtn(GameManager.Instance.menus.menus));
 
         beverageBtn.onClick.RemoveAllListeners();
-        beverageBtn.onClick.AddListener(BeverageBtn);
+        beverageBtn.onClick.AddListener(() => BeverageBtn(GameManager.Instance.menus.menus));
+
+        mir_allMenuBtn.onClick.RemoveAllListeners();
+        mir_allMenuBtn.onClick.AddListener(() => AllMenuBtn(mir_MenuParent, GameManager.Instance.curPlayerMenu.GetAllMenus()));
+
+        mir_appetizerBtn.onClick.RemoveAllListeners();
+        mir_appetizerBtn.onClick.AddListener(() => AppetizerBtn(GameManager.Instance.curPlayerMenu.GetAllMenus()));
+
+        mir_mainDishBtn.onClick.RemoveAllListeners();
+        mir_mainDishBtn.onClick.AddListener(() => MainDishBtn(GameManager.Instance.curPlayerMenu.GetAllMenus()));
+
+        mir_dessertBtn.onClick.RemoveAllListeners();
+        mir_dessertBtn.onClick.AddListener(() => DessertBtn(GameManager.Instance.curPlayerMenu.GetAllMenus()));
+
+        mir_beverageBtn.onClick.RemoveAllListeners();
+        mir_beverageBtn.onClick.AddListener(() => BeverageBtn(GameManager.Instance.curPlayerMenu.GetAllMenus()));
+
 
         cookingStationBG.SetActive(true);
     }
@@ -267,22 +282,43 @@ public class PlayerUIManager : MonoBehaviour
 
         foodReseachBut.interactable = true;
         foodReseachBorder.SetActive(false);
+
+        restaurantBut.interactable = true;
+        restaurantMenuBorder.gameObject.SetActive(false);
+
     }
 
     void FoodReseachBut()
     {
-        AllMenuBtn();
+        AllMenuBtn(menuParent, GameManager.Instance.menus.menus);
 
         fridgeBut.interactable = true;
         fridgeBorder.gameObject.SetActive(false);
 
         foodReseachBut.interactable = false;
         foodReseachBorder.SetActive(true);
+
+        restaurantBut.interactable = true;
+        restaurantMenuBorder.gameObject.SetActive(false);
+    }
+
+    void RestaurantMenuBut()
+    {
+        AllMenuBtn(mir_MenuParent, GameManager.Instance.curPlayerMenu.GetAllMenus());
+
+        restaurantBut.interactable = false;
+        restaurantMenuBorder.gameObject.SetActive(true);
+
+        fridgeBut.interactable = true;
+        fridgeBorder.gameObject.SetActive(false);
+
+        foodReseachBut.interactable = true;
+        foodReseachBorder.SetActive(false);
     }
 
     public void UpdateFridge()
     {
-        ClearFrideSlotParent();
+        ClearParent(fridgeInventoryParent);
 
         if (PlayerManager.Instance.player_Inventory.slots.Count > 0)
         {
@@ -310,33 +346,13 @@ public class PlayerUIManager : MonoBehaviour
 
     }
 
-    void ClearFrideSlotParent()
+    void ClearParent(Transform parent)
     {
-        if (playerInventoryInFridgeParent.childCount > 0)
+        if (parent.childCount > 0)
         {
-            for (int i = 0; i < playerInventoryInFridgeParent.childCount; i++)
+            for (int i = 0; i < parent.childCount; i++)
             {
-                Destroy(playerInventoryInFridgeParent.GetChild(i).gameObject);
-            }
-        }
-
-        if (fridgeInventoryParent.childCount > 0)
-        {
-            for (int i = 0; i < fridgeInventoryParent.childCount; i++)
-            {
-                Destroy(fridgeInventoryParent.GetChild(i).gameObject);
-            }
-        }
-
-    }
-
-    void ClearFoodStationMenu()
-    {
-        if (menuParent.childCount > 0)
-        {
-            for (int i = 0; i < menuParent.childCount; i++)
-            {
-                Destroy(menuParent.GetChild(i).gameObject);
+                Destroy(parent.GetChild(i).gameObject);
             }
         }
     }
@@ -457,103 +473,145 @@ public class PlayerUIManager : MonoBehaviour
         menuInfoBorder.SetActive(false);
     }
 
-    void AllMenuBtn()
+    void AllMenuBtn(Transform parent, List<Menu> menus)
     {
         allMenuBtn.interactable = false;
         appetizerBtn.interactable = true;
         mainDishBtn.interactable = true;
         dessertBtn.interactable = true;
         beverageBtn.interactable = true;
-        InitMenuPrefab();
+
+        mir_allMenuBtn.interactable = false;
+        mir_appetizerBtn.interactable = true;
+        mir_mainDishBtn.interactable = true;
+        mir_dessertBtn.interactable = true;
+        mir_beverageBtn.interactable = true;
+
+        InitMenuPrefab(parent, menus, menuPrefab);
     }
 
-    void AppetizerBtn()
+    void AppetizerBtn(List<Menu> menus)
     {
         allMenuBtn.interactable = true;
         appetizerBtn.interactable = false;
         mainDishBtn.interactable = true;
         dessertBtn.interactable = true;
         beverageBtn.interactable = true;
-        InitMenuPrefab(MenuType.Appetizer);
+
+        mir_allMenuBtn.interactable = true;
+        mir_appetizerBtn.interactable = false;
+        mir_mainDishBtn.interactable = true;
+        mir_dessertBtn.interactable = true;
+        mir_beverageBtn.interactable = true;
+
+        InitMenuPrefab(MenuType.Appetizer, menuParent, menus, menuPrefab);
 
     }
 
-    void MainDishBtn()
+    void MainDishBtn(List<Menu> menus)
     {
         allMenuBtn.interactable = true;
         appetizerBtn.interactable = true;
         mainDishBtn.interactable = false;
         dessertBtn.interactable = true;
         beverageBtn.interactable = true;
-        InitMenuPrefab(MenuType.MainCourse);
+
+        mir_allMenuBtn.interactable = true;
+        mir_appetizerBtn.interactable = true;
+        mir_mainDishBtn.interactable = false;
+        mir_dessertBtn.interactable = true;
+        mir_beverageBtn.interactable = true;
+
+        InitMenuPrefab(MenuType.MainCourse, menuParent, menus, menuPrefab);
     }
 
-    void DessertBtn()
+    void DessertBtn(List<Menu> menus)
     {
         allMenuBtn.interactable = true;
         appetizerBtn.interactable = true;
         mainDishBtn.interactable = true;
         dessertBtn.interactable = false;
         beverageBtn.interactable = true;
-        InitMenuPrefab(MenuType.Dessert);
+
+        mir_allMenuBtn.interactable = true;
+        mir_appetizerBtn.interactable = true;
+        mir_mainDishBtn.interactable = true;
+        mir_dessertBtn.interactable = false;
+        mir_beverageBtn.interactable = true;
+
+        InitMenuPrefab(MenuType.Dessert, menuParent, menus, menuPrefab);
     }
 
-    void BeverageBtn()
+    void BeverageBtn(List<Menu> menus)
     {
         allMenuBtn.interactable = true;
         appetizerBtn.interactable = true;
         mainDishBtn.interactable = true;
         dessertBtn.interactable = true;
         beverageBtn.interactable = false;
-        InitMenuPrefab(MenuType.Beverage);
+
+        mir_allMenuBtn.interactable = true;
+        mir_appetizerBtn.interactable = true;
+        mir_mainDishBtn.interactable = true;
+        mir_dessertBtn.interactable = true;
+        mir_beverageBtn.interactable = false;
+
+        InitMenuPrefab(MenuType.Beverage, menuParent, menus, menuPrefab);
     }
 
-    void InitMenuPrefab()
+    void InitMenuPrefab(Transform parent, List<Menu> menus, GameObject prefab)
     {
-        ClearFoodStationMenu();
-        if (GameManager.Instance.menus.menus.Count > 0)
+        ClearParent(parent);
+        if (menus.Count > 0)
         {
-            for (int i = 0; i < GameManager.Instance.menus.menus.Count; i++)
+            for (int i = 0; i < menus.Count; i++)
             {
-                Menu menu = GameManager.Instance.menus.menus[i];
-                GameObject obj = Instantiate(menuPrefab, menuParent);
+                Menu menu = menus[i];
+                GameObject obj = Instantiate(prefab, parent);
                 Image img = obj.GetComponent<Image>();
                 Button btn = obj.GetComponent<Button>();
                 img.sprite = menu.menu_Icon;
-                if (GameManager.Instance.curPlayerMenu.HasMenu(menu, out int index))
+                if (parent == menuParent)
                 {
-                    img.color = Color.white;
-                    MenuSlot menuSlot = GameManager.Instance.curPlayerMenu.GetSlot(index);
-                    btn.onClick.AddListener(() => ShowMenuInfo_HasMenuAlready(menuSlot));
-                }
-                else
-                {
-                    if (menu.CanReseach())
+                    if (GameManager.Instance.curPlayerMenu.HasMenu(menu, out int index))
                     {
-                        img.color = Color.gray;
-                        btn.onClick.AddListener(() => ShowMenuInfo_CanReseach(menu));
+                        img.color = Color.white;
+                        MenuSlot menuSlot = GameManager.Instance.curPlayerMenu.GetSlot(index);
+                        btn.onClick.AddListener(() => ShowMenuInfo_HasMenuAlready(menuSlot));
                     }
                     else
                     {
-                        img.color = Color.black;
-                        btn.onClick.AddListener(() => ShowMenuInfo_NoHasIngredient(menu));
+                        if (menu.CanReseach())
+                        {
+                            img.color = Color.gray;
+                            btn.onClick.AddListener(() => ShowMenuInfo_CanReseach(menu));
+                        }
+                        else
+                        {
+                            img.color = Color.black;
+                            btn.onClick.AddListener(() => ShowMenuInfo_NoHasIngredient(menu));
+                        }
                     }
+                }
+                else if (parent == mir_MenuParent)
+                {
+
                 }
             }
         }
     }
 
-    void InitMenuPrefab(MenuType type)
+    void InitMenuPrefab(MenuType type, Transform parent, List<Menu> menus, GameObject prefab)
     {
-        ClearFoodStationMenu();
-        if (GameManager.Instance.menus.menus.Count > 0)
+        ClearParent(parent);
+        if (menus.Count > 0)
         {
-            for (int i = 0; i < GameManager.Instance.menus.menus.Count; i++)
+            for (int i = 0; i < menus.Count; i++)
             {
-                Menu menu = GameManager.Instance.menus.menus[i];
+                Menu menu = menus[i];
                 if (menu.menu_Type == type)
                 {
-                    GameObject obj = Instantiate(menuPrefab, menuParent);
+                    GameObject obj = Instantiate(prefab, parent);
                     Image img = obj.GetComponent<Image>();
                     Button btn = obj.GetComponent<Button>();
                     img.sprite = menu.menu_Icon;
@@ -578,6 +636,19 @@ public class PlayerUIManager : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    void ToggleRestaurantState()
+    {
+        GameManager.Instance.isRestaurantOpen = !GameManager.Instance.isRestaurantOpen;
+        if (GameManager.Instance.isRestaurantOpen)
+        {
+            open_and_close_text.text = $"Close Restaurant";
+        }
+        else
+        {
+            open_and_close_text.text = $"Open Restaurant";
         }
     }
 
