@@ -12,10 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80bf24cb791c42545a3f1f1a328ada5d, type: 3}
   m_Name: Fridge_Inventory
   m_EditorClassIdentifier: 
-  slots:
-  - Item: {fileID: 11400000, guid: e2210b1259724824988a4024636669c7, type: 2}
-    count: 2
-    maxDurability: 0
-    curDurability: 0
-    curHandSlot: {fileID: 0}
+  slots: []
   inventory_maxWeight: 20

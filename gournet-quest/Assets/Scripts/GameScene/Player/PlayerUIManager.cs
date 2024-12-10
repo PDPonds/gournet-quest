@@ -352,19 +352,16 @@ public class PlayerUIManager : MonoBehaviour
 
         menuInfo_MenuDetail.SetActive(true);
         float c = menuSlot.completenessCount;
-        float m = 1f;
+        float m = 100f;
         float p = c / m;
-        menuInfo_CompletenessCountText.text = (p * 100f).ToString();
+        menuInfo_CompletenessCountText.text = (p * 100f).ToString("F0");
         menuInfo_CompletenessCountFill.fillAmount = p;
-        menuInfo_MenuMaxCost.text = menuSlot.Menu.menu_Cost.ToString();
+        menuInfo_MenuMaxCost.text = menuSlot.GetCost().ToString();
 
-        if (menuSlot.completenessCount < 100)
-        {
-            menuInfo_ReseachBut.interactable = true;
-            menuInfo_ReseachBut.onClick.RemoveAllListeners();
-            menuInfo_ReseachBut.onClick.AddListener(() => Reseach(menuSlot.Menu));
-        }
-        else menuInfo_ReseachBut.interactable = false;
+        menuInfo_ReseachBut.interactable = true;
+        menuInfo_ReseachBut.onClick.RemoveAllListeners();
+        menuInfo_ReseachBut.onClick.AddListener(() => Reseach(menuSlot.Menu));
+
 
         InitIngredientsInfo(menuSlot.Menu);
 
@@ -412,6 +409,7 @@ public class PlayerUIManager : MonoBehaviour
     void Reseach(Menu menu)
     {
         GameManager.Instance.curCookingMenu = menu;
+        GameManager.Instance.curCompletness = 100f;
         loadCookingScenePanel.SetActive(true);
         StartCoroutine(GameManager.Instance.LoadLevelAsync(2, loadCookingSceneFill));
     }
@@ -522,10 +520,10 @@ public class PlayerUIManager : MonoBehaviour
                 Image img = obj.GetComponent<Image>();
                 Button btn = obj.GetComponent<Button>();
                 img.sprite = menu.menu_Icon;
-                if (PlayerManager.Instance.curPlayerMenu.HasMenu(menu, out int index))
+                if (GameManager.Instance.curPlayerMenu.HasMenu(menu, out int index))
                 {
                     img.color = Color.white;
-                    MenuSlot menuSlot = PlayerManager.Instance.curPlayerMenu.GetSlot(index);
+                    MenuSlot menuSlot = GameManager.Instance.curPlayerMenu.GetSlot(index);
                     btn.onClick.AddListener(() => ShowMenuInfo_HasMenuAlready(menuSlot));
                 }
                 else
@@ -559,10 +557,10 @@ public class PlayerUIManager : MonoBehaviour
                     Image img = obj.GetComponent<Image>();
                     Button btn = obj.GetComponent<Button>();
                     img.sprite = menu.menu_Icon;
-                    if (PlayerManager.Instance.curPlayerMenu.HasMenu(menu, out int index))
+                    if (GameManager.Instance.curPlayerMenu.HasMenu(menu, out int index))
                     {
                         img.color = Color.white;
-                        MenuSlot menuSlot = PlayerManager.Instance.curPlayerMenu.GetSlot(index);
+                        MenuSlot menuSlot = GameManager.Instance.curPlayerMenu.GetSlot(index);
                         btn.onClick.AddListener(() => ShowMenuInfo_HasMenuAlready(menuSlot));
                     }
                     else

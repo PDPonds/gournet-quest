@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Process_PorkSteak_1
   m_EditorClassIdentifier: 
   process_Description: Season the prepared pork with salt and pepper.
-  processType: 0
   process_Time_Sec: 20
+  decrease_completness_if_fail_action: 5
+  decrease_conpletness_if_time_out: 30
+  processType: 0
   sprinkle_target_speed: 2
   sprinkle_delay_per_target: 1
   sprinkle_min_max_increse_progression: {x: 1, y: 3}

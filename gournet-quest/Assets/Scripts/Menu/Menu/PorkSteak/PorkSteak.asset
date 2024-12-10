@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menu_Name: PorkSteak
   menu_Icon: {fileID: 21300000, guid: 3670322031f171f4781edd7e2bb76ecf, type: 3}
-  menu_Discription: 
+  menu_Type: 1
   ingredients:
   - ingredient: {fileID: 11400000, guid: e2210b1259724824988a4024636669c7, type: 2}
     count: 1
@@ -23,3 +23,4 @@ MonoBehaviour:
   processes:
   - {fileID: 11400000, guid: b096b32b5effbd740a82eb8f6cdbf247, type: 2}
   - {fileID: 11400000, guid: aaafd48dbd3d6de47a58f7a28cabb54f, type: 2}
+  menu_Cost: 10

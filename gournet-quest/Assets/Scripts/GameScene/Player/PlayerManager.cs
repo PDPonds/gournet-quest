@@ -52,9 +52,6 @@ public class PlayerManager : Singleton<PlayerManager>
     [Header("===== Fridge =====")]
     public InventorySO fridge_Inventory;
 
-    [Header("===== Menus =====")]
-    public CurPlayerMenu curPlayerMenu;
-
     public void SetupPlayer()
     {
         rb = GetComponent<Rigidbody>();

@@ -16,6 +16,9 @@ public class CookingUIManager : MonoBehaviour
     [Header("===== Summary Process =====")]
     [SerializeField] GameObject success_UI;
     [SerializeField] GameObject fail_UI;
+    [Header("===== LoadingScene =====")]
+    public GameObject loadingPanel;
+    public Image loadingFill;
 
     public void UpdateActionTime(float c, float m)
     {

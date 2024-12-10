@@ -46,6 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerManager: {fileID: 0}
   Player: {fileID: 6778052323733655770, guid: 535991e4369b5eb4eb1844f7299e926a, type: 3}
+  items: {fileID: 11400000, guid: 0292ca26b6d6b4f4fa780b5adef514ac, type: 2}
+  menus: {fileID: 11400000, guid: 4e88be1b8eab5504dbc6065bb524ebd2, type: 2}
   mainMenu_Camera: {fileID: 5107901924469843879, guid: 0c27d198a6e6da24196627c0582adaaa,
     type: 3}
   mainMenu_Directional_Light: {fileID: 4111589378710838468, guid: e982e85e3eb37a04784eec056af5df6a,
@@ -56,3 +58,6 @@ MonoBehaviour:
     type: 3}
   mainMenu_EventSystem: {fileID: 5885716536341252706, guid: 3d450d6c08f42c847810c256172848e4,
     type: 3}
+  curCookingMenu: {fileID: 0}
+  curCompletness: 0
+  curPlayerMenu: {fileID: 11400000, guid: 525116652d7d8b840a0898ab70db679f, type: 2}

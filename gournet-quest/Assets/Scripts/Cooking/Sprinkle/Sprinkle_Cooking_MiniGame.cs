@@ -27,6 +27,8 @@ public class Sprinkle_Cooking_MiniGame : MonoBehaviour
     [Header("===== Init Point =====")]
     [SerializeField] Transform initPosition;
 
+    List<GameObject> allTarget = new List<GameObject>();
+
     public void Setup(float delayToInit)
     {
         max_delay = delayToInit;
@@ -66,6 +68,17 @@ public class Sprinkle_Cooking_MiniGame : MonoBehaviour
         }
     }
 
+    public void ClearAllTarget()
+    {
+        if (allTarget.Count > 0)
+        {
+            for (int i = 0; i < allTarget.Count; i++)
+            {
+                Destroy(allTarget[i]);
+            }
+        }
+    }
+
     void InitAndSetupSprinkleTarget(SprinkleType type)
     {
         Process curProcess = GameManager.Instance.curCookingMenu.processes[CookingManager.Instance.curProcessIndex];
@@ -86,6 +99,7 @@ public class Sprinkle_Cooking_MiniGame : MonoBehaviour
         }
         Sprinkle_MiniGame_Target target = go.GetComponent<Sprinkle_MiniGame_Target>();
         target.Setup(type, sprinkle.sprinkle_target_speed);
+        allTarget.Add(go);
     }
 
     void lookatCamera(Transform transform)
@@ -116,53 +130,35 @@ public class Sprinkle_Cooking_MiniGame : MonoBehaviour
                     }
                     else
                     {
-                        if (sprinkle_progression > 0)
-                        {
-                            sprinkle_progression -= sprinkle.sprinkle_decrease_progression;
-                            CookingManager.Instance.cookingUIManager.UpdateProgressionBar(sprinkle_progression, sprinkle.sprinkle_target_progression);
-                            if (sprinkle_progression <= 0)
-                            {
-                                sprinkle_progression = 0;
-                            }
-                        }
+                        DecreaseProcess(sprinkle);
                     }
                 }
                 else
                 {
-                    if (sprinkle_progression > 0)
-                    {
-                        sprinkle_progression -= sprinkle.sprinkle_decrease_progression;
-                        CookingManager.Instance.cookingUIManager.UpdateProgressionBar(sprinkle_progression, sprinkle.sprinkle_target_progression);
-                        if (sprinkle_progression <= 0)
-                        {
-                            sprinkle_progression = 0;
-                        }
-                    }
+                    DecreaseProcess(sprinkle);
                 }
             }
             else
             {
-                if (sprinkle_progression > 0)
-                {
-                    sprinkle_progression -= sprinkle.sprinkle_decrease_progression;
-                    CookingManager.Instance.cookingUIManager.UpdateProgressionBar(sprinkle_progression, sprinkle.sprinkle_target_progression);
-                    if (sprinkle_progression <= 0)
-                    {
-                        sprinkle_progression = 0;
-                    }
-                }
+                DecreaseProcess(sprinkle);
             }
         }
         else
         {
-            if (sprinkle_progression > 0)
+            DecreaseProcess(sprinkle);
+        }
+    }
+
+    void DecreaseProcess(Sprinkle_Process sprinkle)
+    {
+        if (sprinkle_progression > 0)
+        {
+            sprinkle_progression -= sprinkle.sprinkle_decrease_progression;
+            GameManager.Instance.curCompletness -= sprinkle.decrease_completness_if_fail_action;
+            CookingManager.Instance.cookingUIManager.UpdateProgressionBar(sprinkle_progression, sprinkle.sprinkle_target_progression);
+            if (sprinkle_progression <= 0)
             {
-                sprinkle_progression -= sprinkle.sprinkle_decrease_progression;
-                CookingManager.Instance.cookingUIManager.UpdateProgressionBar(sprinkle_progression, sprinkle.sprinkle_target_progression);
-                if (sprinkle_progression <= 0)
-                {
-                    sprinkle_progression = 0;
-                }
+                sprinkle_progression = 0;
             }
         }
     }

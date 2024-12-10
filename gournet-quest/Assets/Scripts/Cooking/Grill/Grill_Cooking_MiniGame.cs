@@ -68,7 +68,7 @@ public class Grill_Cooking_MiniGame : MonoBehaviour
 
     public void RandomLength(float length)
     {
-        startPos = Random.Range(0, 1f);
+        startPos = Random.Range(0, 1f - length);
         endPos = startPos + length;
 
         bottomFill.fillAmount = startPos;

@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Process_PorkSteak_2
   m_EditorClassIdentifier: 
   process_Description: Grill the pork and rosemary.
-  processType: 1
   process_Time_Sec: 20
+  decrease_completness_if_fail_action: 0
+  decrease_conpletness_if_time_out: 30
+  processType: 1
   ingredients: []
   grill_length: 0.2
   grill_increase_position_per_click: 0.1

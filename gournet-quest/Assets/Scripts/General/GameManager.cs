@@ -23,13 +23,17 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] GameObject mainMenu_Canvas;
     [SerializeField] GameObject mainMenu_EventSystem;
 
+    [Header("===== Player Menus =====")]
+    public CurPlayerMenu curPlayerMenu;
+
     [Header("===== Cooking Scene =====")]
     [HideInInspector] public Menu curCookingMenu;
+    [HideInInspector] public float curCompletness;
+
 
     private void Awake()
     {
         BindMainMenuObject();
-
         DontDestroyOnLoad(gameObject);
     }
 

@@ -59,29 +59,36 @@ public class CookingManager : Singleton<CookingManager>
         UpdatePhase();
     }
 
+    void DisableAllProcessAsset()
+    {
+        sprinkle_MiniGame.SetActive(false);
+        grill_MiniGame.SetActive(false);
+        salt.SetActive(false);
+        pepper.SetActive(false);
+        grill_pan.SetActive(false);
+        fried_pan.SetActive(false);
+        deepFried_pan.SetActive(false);
+
+        cookingUIManager.HideFail();
+        cookingUIManager.HideSuccess();
+
+        cookingUIManager.UpdateActionTime(1, 1);
+
+        cookingUIManager.UpdateProgressionBar(0f, 1f);
+    }
+
     public void SwitchPhase(CookingPhase phase)
     {
         curPhase = phase;
-        Process curProcess = GameManager.Instance.curCookingMenu.processes[curProcessIndex];
 
         switch (curPhase)
         {
             case CookingPhase.PrepareProcess:
 
-                sprinkle_MiniGame.SetActive(false);
-                grill_MiniGame.SetActive(false);
-                salt.SetActive(false);
-                pepper.SetActive(false);
-                grill_pan.SetActive(false);
-                fried_pan.SetActive(false);
-                deepFried_pan.SetActive(false);
+                DisableAllProcessAsset();
 
-                cookingUIManager.HideFail();
-                cookingUIManager.HideSuccess();
-
-                cookingUIManager.UpdateProgressionBar(0f, 1f);
-
-                switch (curProcess)
+                Process prepare_curProcess = GameManager.Instance.curCookingMenu.processes[curProcessIndex];
+                switch (prepare_curProcess)
                 {
                     case Sprinkle_Process sprinkle:
 
@@ -130,7 +137,7 @@ public class CookingManager : Singleton<CookingManager>
                         grill_pan.SetActive(true);
 
                         grill_cooking_miniGame.RandomLength(grill.grill_length);
-                        grill_cooking_miniGame.Setup(grill.grill_increase_position_per_click, grill.grill_decrease_per_time , 
+                        grill_cooking_miniGame.Setup(grill.grill_increase_position_per_click, grill.grill_decrease_per_time,
                             grill.grill_increase_progression_per_time);
 
                         if (grill.ingredients.Length > 0)
@@ -155,7 +162,8 @@ public class CookingManager : Singleton<CookingManager>
                 break;
             case CookingPhase.Action:
 
-                switch (curProcess)
+                Process action_curProcess = GameManager.Instance.curCookingMenu.processes[curProcessIndex];
+                switch (action_curProcess)
                 {
                     case Sprinkle_Process sprinkle:
                         break;
@@ -163,7 +171,7 @@ public class CookingManager : Singleton<CookingManager>
                         break;
                 }
 
-                curTime = curProcess.process_Time_Sec;
+                curTime = action_curProcess.process_Time_Sec;
 
                 break;
             case CookingPhase.Process_Success:
@@ -171,9 +179,11 @@ public class CookingManager : Singleton<CookingManager>
                 cookingUIManager.ShowSucess();
                 success_and_fail_time = 3f;
 
-                switch (curProcess)
+                Process success_curProcess = GameManager.Instance.curCookingMenu.processes[curProcessIndex];
+                switch (success_curProcess)
                 {
                     case Sprinkle_Process sprinkle:
+                        sprinkle_cooking_miniGame.ClearAllTarget();
                         break;
                     case Grill_Process grill:
                         break;
@@ -185,32 +195,48 @@ public class CookingManager : Singleton<CookingManager>
                 cookingUIManager.ShowFail();
                 success_and_fail_time = 3f;
 
-                switch (curProcess)
+                Process fail_curProcess = GameManager.Instance.curCookingMenu.processes[curProcessIndex];
+                switch (fail_curProcess)
                 {
                     case Sprinkle_Process sprinkle:
+                        sprinkle_cooking_miniGame.ClearAllTarget();
                         break;
                     case Grill_Process grill:
                         break;
                 }
-
+                GameManager.Instance.curCompletness -= fail_curProcess.decrease_conpletness_if_time_out;
                 break;
             case CookingPhase.SummaryMenu:
-                
+
+                DisableAllProcessAsset();
+                CalcurateFoodGrade();
+
+                cookingUIManager.loadingPanel.SetActive(true);
+                StartCoroutine(GameManager.Instance.LoadLevelAsync(1, cookingUIManager.loadingFill));
+
                 break;
         }
 
 
     }
 
+    void CalcurateFoodGrade()
+    {
+        if (GameManager.Instance.curCompletness > 49)
+        {
+            GameManager.Instance.curPlayerMenu.UpdateMenuSlot(GameManager.Instance.curCookingMenu, GameManager.Instance.curCompletness);
+        }
+    }
+
     void UpdatePhase()
     {
-        Process curProcess = GameManager.Instance.curCookingMenu.processes[curProcessIndex];
 
         switch (curPhase)
         {
             case CookingPhase.PrepareProcess:
 
-                switch (curProcess)
+                Process prepare_curProcess = GameManager.Instance.curCookingMenu.processes[curProcessIndex];
+                switch (prepare_curProcess)
                 {
                     case Sprinkle_Process sprinkle:
                         break;
@@ -232,15 +258,16 @@ public class CookingManager : Singleton<CookingManager>
                 break;
             case CookingPhase.Action:
 
+                Process action_curProcess = GameManager.Instance.curCookingMenu.processes[curProcessIndex];
                 curTime -= Time.deltaTime;
-                cookingUIManager.UpdateActionTime(curTime, curProcess.process_Time_Sec);
+                cookingUIManager.UpdateActionTime(curTime, action_curProcess.process_Time_Sec);
                 if (curTime <= 0)
                 {
                     curTime = 0;
                     SwitchPhase(CookingPhase.Process_Fail);
                 }
 
-                switch (curProcess)
+                switch (action_curProcess)
                 {
                     case Sprinkle_Process sprinkle:
                         break;
@@ -251,6 +278,8 @@ public class CookingManager : Singleton<CookingManager>
                 break;
             case CookingPhase.Process_Success:
 
+                Process success_curProcess = GameManager.Instance.curCookingMenu.processes[curProcessIndex];
+
                 success_and_fail_time -= Time.deltaTime;
                 if (success_and_fail_time <= 0)
                 {
@@ -265,7 +294,7 @@ public class CookingManager : Singleton<CookingManager>
                     }
                 }
 
-                switch (curProcess)
+                switch (success_curProcess)
                 {
                     case Sprinkle_Process sprinkle:
                         break;
@@ -276,6 +305,8 @@ public class CookingManager : Singleton<CookingManager>
                 break;
             case CookingPhase.Process_Fail:
 
+                Process fail_curProcess = GameManager.Instance.curCookingMenu.processes[curProcessIndex];
+
                 success_and_fail_time -= Time.deltaTime;
                 if (success_and_fail_time <= 0)
                 {
@@ -290,7 +321,7 @@ public class CookingManager : Singleton<CookingManager>
                     }
                 }
 
-                switch (curProcess)
+                switch (fail_curProcess)
                 {
                     case Sprinkle_Process sprinkle:
                         break;
@@ -299,7 +330,6 @@ public class CookingManager : Singleton<CookingManager>
                 }
                 break;
             case CookingPhase.SummaryMenu:
-                Debug.Log("Summary Menu");
                 break;
         }
 
